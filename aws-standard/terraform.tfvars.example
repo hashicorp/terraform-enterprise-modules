@@ -1,0 +1,21 @@
+# Please refer to the README.md for documentation on each variable
+
+hostname = "emp-test"
+zone_id = "ZVEF52R7NLTW6"
+cert_id = "arn:aws:acm:us-west-2:241656615859:certificate/f32fa674-de62-4681-8035-21a4c81474c6"
+instance_subnet_id = "subnet-0de26b6a"
+elb_subnet_id = "subnet-0de26b6a"
+data_subnet_ids = ["subnet-0ce26b6b", "subnet-d0f35099"]
+db_password = "chrischrischris"
+bucket_name = "hashicorp-tfe-emp-test-data"
+key_name = "tfe"
+
+# Optional variables
+#
+# region =
+# az =
+# db_username =
+# db_size_gb =
+# db_instance_class =
+# db_multi_az =
+# db_snapshot_identifier =
