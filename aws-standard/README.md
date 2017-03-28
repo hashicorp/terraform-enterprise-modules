@@ -2,9 +2,9 @@
 
 ## Delivery
 
-The goal of this installation procedure is to setup a Terraform Enterprise cluster that is available on a DNS name that is accessed via https. This standard configuration package uses Route53 to configure the DNS automatically, all that needs to be provided is a hostname and a zone id. For example, if you want the cluster available at `tfe.mycompany.io`, then you'd provide `tfe` as the hostname and a zone id for the Route53 configuration of `mycompany.io`.
-
-If you don't wish to use Route53 for your DNS, please use the `aws-standard-nodns` package, which will configure everything and output values you need to setup in your DNS by hand.
+The goal of this installation procedure is to set up a Terraform Enterprise
+cluster that is available on a DNS name that is accessed via HTTPS. This
+standard configuration package uses Terraform to create both the compute and data layer resources, and optionally uses Route53 to configure the DNS automatically,
 
 ## Preflight
 
@@ -23,28 +23,31 @@ on the users environment.
 
 ### Variables
 
-* hostname: The name that cluster will be registered as. This combined with the zone information will form the DNS name that the cluster is accessed at. See the note in [Delivery](#Delivery) about what this should be. Example: `emp-test`
-* zone\_id: The id of a Route53 zone that a record for the cluster will be installed into. Example: `ZVEF52R7NLTW6`
-* cert\_id: An AWS certificate ARN. This is the certification that will be used by the ELB for the cluster. Example: `arn:aws:acm:us-west-2:241656615859:certificate/f32fa674-de62-4681-8035-21a4c81474c6`
-* instance\_subnet\_id: Subnet id of the subnet that the cluster's instance will be placed into. If this is a public subnet, the instance will be assigned a public IP. This is not required as the primary cluster interface is an ELB registered with the hostname. Example: `subnet-0de26b6a`
-* elb\_subnet\_id: Subnet id of the subnet that the cluster's instance will be placed into. If this is a public subnet, the instance will be assigned a public IP. This is not required as the primary cluster interface is an ELB registered with the hostname. Example: `subnet-0de26b6a`
-* data\_subnet\_ids: Subnet ids that will be used to create the data services (RDS and redis) used by the cluster. There must be 2 subnet ids given for proper redundency. Example: `["subnet-0ce26b6b", "subnet-d0f35099"]`
-* db\_password: Password that will be used to access RDS. Example: `databaseshavesecrets`
-* bucket\_name: Name of the S3 bucket to store artifacts used by the cluster into. This bucket is automatically created. We suggest you name it `tfe-${hostname}-data`, as convention.
-* key\_name: Name of AWS ssh key pair that will be used. The pair needs to already exist, it will not be created.
+* `ami_id`: The ID of a Terraform Enterprise Base AMI. See [`ami-ids`](../docs/ami-ids.md) to look one up.
+* `fqdn`: The name that cluster be known as. This value needs to match the DNS setup for proper operations. Example: `tfe-eng01.mycompany.io`
+* `cert_id`: An AWS certificate ARN. This is the certification that will be used by the ELB for the cluster. Example: `arn:aws:acm:us-west-2:241656615859:certificate/f32fa674-de62-4681-8035-21a4c81474c6`
+* `instance_subnet_id`: Subnet id of the subnet that the cluster's instance will be placed into. If this is a public subnet, the instance will be assigned a public IP. This is not required as the primary cluster interface is an ELB registered with the hostname. Example: `subnet-0de26b6a`
+* `elb_subnet_id`: Subnet id of the subnet that the cluster's instance will be placed into. If this is a public subnet, the instance will be assigned a public IP. This is not required as the primary cluster interface is an ELB registered with the hostname. Example: `subnet-0de26b6a`
+* `data_subnet_ids`: Subnet ids that will be used to create the data services (RDS and redis) used by the cluster. There must be 2 subnet ids given for proper redundency. Example: `["subnet-0ce26b6b", "subnet-d0f35099"]`
+* `db_password`: Password that will be used to access RDS. Example: `databaseshavesecrets`
+* `bucket_name`: Name of the S3 bucket to store artifacts used by the cluster into. This bucket is automatically created. We suggest you name it `tfe-${hostname}-data`, as convention.
+* `key_name`: Name of AWS ssh key pair that will be used. The pair needs to already exist, it will not be created.
 
 ### Optional Variables
 
 These variables can be populated, but they have defaults that can also be used.
 
-* region: The AWS region to deploy into. Default: `us-west-2`
-* az: The AWS availability zone to use within the region. Default: `us-west-2a`
-* manage\_bucket: Indicate if this terraform state should create and own the bucket. Set this to false if you are reusing an existing bucket.
-* db\_username: Username that will be used to access RDS. Default: `atlas`
-* db\_size\_gb: Disk size of the RDS instance to create. Default: `80`
-* db\_instance\_class: Instance type of the RDS instance to create. Default: `db.m4.large`
-* db\_multi\_az: Configure if the RDS cluster should multiple AZs to improve snapshot performance. Default: `true`
-* db\_snapshot\_identifier: Previously made snapshot to restore when RDS is created. This is for migration of data between clusters. Default is to create the database fresh.
+* `region`: The AWS region to deploy into. Default: `us-west-2`
+* `az`: The AWS availability zone to use within the region. Default: `us-west-2a`
+* `manage_bucket`: Indicate if this terraform state should create and own the bucket. Set this to false if you are reusing an existing bucket.
+* `db_username` Username that will be used to access RDS. Default: `atlas`
+* `db_size_gb` Disk size of the RDS instance to create. Default: `80`
+* `db_instance_class` Instance type of the RDS instance to create. Default: `db.m4.large`
+* `db_multi_az` Configure if the RDS cluster should multiple AZs to improve snapshot performance. Default: `true`
+* `db_snapshot_identifier` Previously made snapshot to restore when RDS is created. This is for migration of data between clusters. Default is to create the database fresh. You'll need to set `db_name` on the first Terraform apply when using this parameter.
+* `db_name` This needs to be set to `""` for ths first run when using `db_snapshot_identifier`. Subsequent runs should omit this value so there is not a terraform plan diff.
+* `zone_id` The id of a Route53 zone that a record for the cluster will be installed into. Leave this blank if you need to manage DNS elsewhere. Example: `ZVEF52R7NLTW6`
+* `hostname` The name that cluster will be registered as. This combined with the zone information will form the DNS name that the cluster is accessed at. See the note in [Delivery](#Delivery) about what this should be. Example: `emp-test`
 
 ### Populating Variables
 
@@ -61,3 +64,12 @@ Once you're ready to deploy Terraform Enterprise, run `terraform apply`. This wi
 ## Upgrade
 
 To upgrade your instance of Terraform Enterprise, simply update the repository containing the terraform configuration, plan, and apply.
+
+## Outputs
+
+* `dns_name` - The DNS name of the load balancer for TFE. If you are managing
+   DNS separately, you'll need to make a CNAME record from your indicated
+   hostname to this value.
+* `zone_id` - The Route53 Zone ID of the load balancer for TFE. If you are
+   managing DNS separately but still using Route53, this value may be useful.
+* `url` - The URL where TFE will become available when it boots.

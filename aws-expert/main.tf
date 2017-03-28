@@ -43,6 +43,11 @@ variable "bucket_name" {
   description = "S3 bucket to store artifacts into"
 }
 
+variable "manage_bucket" {
+  description = "Indicate if the S3 bucket should be created/owned by this terraform state"
+  default     = true
+}
+
 variable "key_name" {
   description = "Keypair name to use when started the instances"
 }
@@ -58,8 +63,7 @@ variable "redis_port" {
 }
 
 variable "ami_id" {
-  description = "AWS region to place cluster into"
-  default     = "ami-d6a32cb6"
+  description = "The AMI ID of a Terraform Enterprise Base image"
 }
 
 variable "instance_type" {
@@ -107,6 +111,7 @@ module "instance" {
   redis_port         = "${var.redis_port}"
   bucket_name        = "${var.bucket_name}"
   bucket_region      = "${var.region}"
+  manage_bucket      = "${var.manage_bucket}"
 }
 
 output "dns_name" {

@@ -1,9 +1,15 @@
+variable "fqdn" {
+  description = "The fully qualified domain name the cluster is accessible as"
+}
+
 variable "hostname" {
-  description = "The name the cluster will be register as under the zone"
+  description = "The name the cluster will be register as under the zone (optional if separately managing DNS)"
+  default = ""
 }
 
 variable "zone_id" {
-  description = "The route53 zone id to register the hostname in"
+  description = "The route53 zone id to register the hostname in (optional if separately managing DNS)"
+  default = ""
 }
 
 variable "cert_id" {
@@ -51,8 +57,7 @@ variable "region" {
 }
 
 variable "ami_id" {
-  description = "AWS region to place cluster into"
-  default     = "ami-0ca12a6c"
+  description = "The AMI of a Terraform Enterprise Base image"
 }
 
 variable "instance_type" {
@@ -76,6 +81,11 @@ variable "db_size_gb" {
 
 variable "db_instance_class" {
   default = "db.m4.large"
+}
+
+variable "db_name" {
+  description = "Name of the Postgres database. Set this blank on the first run if you are restoring using a snapshot_identifier. Subsequent runs should let it take its default value."
+  default = "atlas_production"
 }
 
 // Multi AZ allows database snapshots to be taken without incurring an I/O
@@ -118,16 +128,12 @@ module "route53" {
   alias_zone_id  = "${module.instance.zone_id}"
 }
 
-data "aws_route53_zone" "selected" {
-  zone_id = "${var.zone_id}"
-}
-
 module "instance" {
   source               = "../modules/tfe-instance"
   installation_id      = "${random_id.installation-id.hex}"
   ami_id               = "${var.ami_id}"
   instance_type        = "${var.instance_type}"
-  hostname             = "${var.hostname}.${replace(data.aws_route53_zone.selected.name, "/.$/", "")}" # "
+  hostname             = "${var.fqdn}"
   az                   = "${var.az}"
   vpc_id               = "${data.aws_subnet.instance.vpc_id}"
   cert_id              = "${var.cert_id}"
@@ -163,6 +169,7 @@ module "db" {
   storage_type            = "gp2"
   kms_key_id              = "${aws_kms_key.key.arn}"
   snapshot_identifier     = "${var.db_snapshot_identifier}"
+  db_name                 = "${var.db_name}"
 }
 
 module "redis" {
@@ -178,6 +185,14 @@ output "kms_key_id" {
   value = "${aws_kms_key.key.arn}"
 }
 
-output "hostname" {
-  value = "${module.instance.hostname}"
+output "url" {
+  value = "https://${var.fqdn}"
+}
+
+output "dns_name" {
+  value = "${module.instance.dns_name}"
+}
+
+output "zone_id" {
+  value = "${module.instance.zone_id}"
 }

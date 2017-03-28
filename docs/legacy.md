@@ -1,63 +1,77 @@
 *NOTE:* This document only applies to customers who are running the Legacy TFE
-architecture. If you're unsure if that's you, it likely is not.
+architecture (mid-late 2016). If you're unsure if that's you, it likely is not.
 
-## Migrating from a Legacy TFE installation
+## Migrating from a Legacy Terraform Enterprise (TFE) Installation
 
-The current generation of TFE has different setup that legacy installations.
-For one, the footprint is vastly reduced based on information we gathered from
-customers. We believe this new smaller footprint installation will provide
-users the same performance for a cheaper cost and simpler adminstration.
+The legacy TFE platform (v2) shipped as a complex multi-VM deployment. The
+current generation (v3) ships as a single VM with supporting AWS services,
+including S3 and RDS. This vastly simplifies deployment considerations and
+reduces estimated operating costs by almost 90%.
 
-### Data Assets
+Additionally, v2 shipped with a proprietary orchestration tool that was critical
+for installation and maintenance. In v3, these functions are either performed
+by Terraform configuration, with full source provided to you, or by simple
+scripts self-contained inside the VM.
 
-To migrate a legacy installation, the assets of the current installation must
-be gathered and made available to the new installation. With the data assets in
-place, the new installation will restore from the data assets and be fully
-active.
+We hope that the improvements in v3 reduce the time you spend managing your TFE
+installation and increase your confidence in delivering TFE to the rest of your
+organization.
 
-#### RDS
+### Data
 
-Both the legacy and current installations use RDS to store the vast majority of
-the data. To migrate this data, it's necessary to use the RDS snapshot ability
-to allow move the data between Terraform managed RDS clusters. Snapshots are
-used rather than importing the legacy RDS installation into the new
-installation due to RDS changes, primarly encryption.
+To upgrade your version of TFE to v3, you will need to access your existing
+v2 installation to create backups and copy some configuration. Afterwards, v3
+will be ready to resume work where you left off.
 
-#### Vault/Consul data
+- Both v2 and v3 store most of their data in RDS. v3 is designed to use RDS
+  encryption by default. When migrating from v2 to v3 we _strongly_ recommend
+  enabling RDS encryption. To do this, you will need to create an encrypted RDS
+  snapshot and specify the encrypted snapshot and KMS key in the v3 terraform
+  config.
 
-Data stored within vault and consul must also be migrated to the new
-installation. This is done using a provided script that is run on a node of the
-legacy cluster.
+- Vault and Consul data will be migrated using a supplemental backup script
+  provided by HashiCorp. This must be run from a bastion instance created by the
+  legacy installer tool. The script will create a v3-compatible backup from your
+  v2 consul and vault clusters.
 
-#### S3
-
-The new installation does not require the movement of the data stored in S3.
-The existing bucket need only be referenced in the `tfvars` file with
-`manage_bucket = false` also set, so that the new installation, during
-installation, simply uses the bucket rather than attempting to create it.
+- The primary S3 bucket in the v2 installation is the one with the
+  `-storagelocker` suffix. This S3 bucket may be left as-is, and you will have
+  the option to configure your existing S3 bucket in the v3 Terraform
+  configuration by adding `manage_bucket = false` to your `tfvars` file. Please
+  note that v3 expects the bucket to be versioned to facilitate cross-region
+  disaster recovery. If your bucket is not versioned please use this opportunity
+  to enable versioning. The remainder of the buckets in the v2 installation are
+  administrative and can be cleaned up after a successful upgrade.
 
 ### Installation Steps
 
 #### Step 1. Configuration
 
-You'll be configuring a `tfvars` file in the `aws-standard-nodns` directory.
-Please reference [the README.md](../aws-standard-nodns/README.md) for full
-descriptions of all the variables. For your installation, you'll be providing
-your existing S3 bucket as `bucket_name` and `tfe-legacy-upgrade` as the
-`db_snapshot_identifier`.
+Begin by configuring the `tfvars` file found in the `aws-standard`
+directory. Please reference [the README.md](../aws-standard/README.md) for
+full descriptions of all the variables. You will provide your existing S3 bucket
+as `bucket_name`, and `tfe-legacy-upgrade` as the `db_snapshot_identifier`.
 
-The `fqdn` value is the full hostname that the cluster will be available as, for
-instance `tfe.mycompany.io`. This value will be baked into the cluster on install
-and you'll be configuring that value with a CNAME based on the outputs of the
-terraform apply. *NOTE:* This value does not have to be the same as the the
-value used for the legacy TFE installation. You're free to pick whatever you'd
-like, but it just must be consistently used for the new installation.
+ * Set existing `-storagelocker` S3 bucket as `bucket_name`
+ * Set `manage_bucket` to `false` to indicate that this Terraform config will
+   not create and manage a new bucket
+ * Set `tfe-legacy-upgrade` as the `db_snapshot_identifier` - this will be the
+   name of the encrypted snapshot copy below.
+
+Specify `fqdn` as the DNS name used to access your installation, for example
+`tfe.mycompany.io`. This value is used internally for redirects and CSRF.
+Externally, you will need to direct your DNS server to the CNAME output from
+`terraform apply`. **NOTE:** This value does not have to be the same as the the
+value used for the v2 TFE installation. You're free to pick whatever you'd
+like, but the `fqdn` must match your v3 installation's external DNS or you will
+be unable to login.
 
 #### Step 2. KMS key creation
 
-The new installation uses KMS to encrypt sensitive values stored within S3 as
-well as RDS. We need to create the KMS key and use it to make an encrypted RDS
-snapshot before doing the full install.
+TFE v3 uses KMS to encrypt sensitive data stored in S3 and RDS. Because you will
+be migrating data, you will need to create a KMS key in advance. We will use
+this key to create an encrypted RDS snapshot and to encrypt the v2-to-v3 backup
+in S3.
 
 First, plan the change: `$ terraform plan --target=aws_kms_key.key`
 
@@ -65,16 +79,23 @@ This should only be creating the kms key, nothing else. Once this is approved:
 
 `$ terraform apply --target=aws_kms_key.key`
 
-This will output a KMS key arn as `aws_kms_key.key`. You'll use this value in
-the next steps.
+This will output a KMS key ARN as `aws_kms_key.key`. You will use this value in
+subsequent steps.
+
+**Note:** The Terraform configuration provided by HashiCorp assumes that the v3
+install is taking place in the same account and region where your v2
+installation is located. If you are migrating to a new account or region you
+will need to make minor adjustments, such as creating a new KMS key in the
+target region or sharing a KMS key between accounts. Please refer to the AWS
+documentation for details.
 
 #### Step 3. Shutting down Legacy Application
 
-In order to prevent any data from being written while the application is being
-migrated, we will shut down the Atlas job in the legacy installation.
+Terminate the Atlas job inside your v2 installation. This will allow you
+to perform a clean data migration without losing in-flight work.
 
-Bring up a bastion in the legacy installtion and run the following commands to
-stop the Atlas job:
+To do this, bring up a bastion in the legacy installation and run the following
+commands:
 
 ```
 # Back up Atlas job contents
@@ -83,72 +104,99 @@ nomad inspect atlas > atlas.job.json
 nomad stop atlas
 ```
 
-Leave the bastion host up as we'll use it to extract Consul/Vault data in a
-following step.
+Leave the bastion host running as you will also use it to migrate Consul and
+Vault data in a subsequent step.
+
+**Note:** Make sure the Atlas jobs have completely terminated before you
+proceed. This ensures you will produce a consistent snapshot of work in TFE.
 
 #### Step 4. RDS snapshot creation
 
-Now we need create a snapshot of the RDS database and then encrypt it with the
-KMS key we just created. It's important that the state in RDS be consistent, so
-we urge the legacy cluster be put into maintaince mode before taking the
-snapshot.
+Create an RDS snapshot from your v2 database. You can create a snapshot via the
+AWS api or via the AWS console. We suggest naming the snapshot `tfe-legacy-1`.
 
-The snapshot can be taken via the AWS api or via the AWS console. We suggest
-the snapshot be named `tfe-legacy-1`.
+Once the snapshot is complete, perform a copy of the snapshot with encryption
+enabled. This procedure is documented here:
+[Amazon RDS Update - Share Encrypted Snapshots, Encrypt Existing Instances](https://aws.amazon.com/blogs/aws/amazon-rds-update-share-encrypted-snapshots-encrypt-existing-instances/).
 
-Once this snapshot finishes, perform a copy of this snapshot with encryption
-enabled. This document walks through the procedure nicely: [Amazon RDS Update - Share Encrypted Snapshots, Encrypt Existing Instances](https://aws.amazon.com/blogs/aws/amazon-rds-update-share-encrypted-snapshots-encrypt-existing-instances/).
+Be sure to select `Yes` to `Enable Encryption` and then select the KMS
+key we created in Step 2 as the `Master Key`. We suggest naming the snapshot
+`tfe-legacy-upgrade`, which is the value we indicated earlier for
+`db_snapshot_identifier` in your `tfvars` file.
 
-Name the snapshot `tfe-legacy-upgrade` or whatever value you configured in `tfvars` for `db_snapshot_identifier`.
-
-You'll be sure to select `Yes` to `Enable Encrytion` and then select the KMS
- key we created in Step 2 as the `Master Key`. Once the snapshot is finished,
- move on to the next step.
+Once the snapshot has completed, move on to the next step.
 
 #### Step 5. Consul/Vault data
 
-The legacy installation has one important piece of data in Consul/Vault we need
-to extract: the Vault encryption keys, unseal keys, and access token.
+The v2 Consul and Vault clusters contain the encryption keys needed to access
+encrypted data stored in RDS (note that this application-level encryption is
+different from the system-wide RDS encryption we just talked about). To restore
+these keys into v3 we will create a special backup from the v2 data that is
+compatible with v3's automatic restore feature.
 
-From the bastion host we spun up to stop the legacy application, we are going to:
+Upload `tfe-v2-to-v3.tar.gz` to the v2 bastion host you created earlier (or
+create a new bastion host now).
 
- * Extract the relevant Consul K/V data from the legacy Consul.
- * Arrange this data in a format consumable by the new architecture.
- * Upload this data into the shared S3 bucket where the new instance will find
-   it and load it.
+Extract the `tfe-v2-to-v3.tar.gz` into a folder like `~/backup` or
+`/tmp/backup`. It should contain the following files:
 
-See HashiCorp employees to coordinate this process.
+    consul (binary)
+    consul.json
+    legacy-backup.sh
+    vault.hcl
+
+Make sure the `consul` binary is marked executable, and then invoke
+`bash legacy-backup.sh`. This will connect to consul inside your v2 cluster and
+produce a file called `atlas-backup-[timestamp].tar.gz`, which v3 can restore.
+For additional details please refer to the script itself.
+
+After you have the atlas-backup file, you will need to put it in S3 and encrypt
+it with KMS. It should be placed under the `tfe-backup` folder in your TFE S3
+bucket, like `s3://my-tfe-data/tfe-backup/atlas-backup-[timestamp].tar.gz`.
+
+You must encrypt the archive when copying it to S3. Either ensure that the
+bastion host's IAM role can use the KMS key, or pass in a set of credentials
+that can access the required resources in KMS and S3. For example:
+
+    aws configure set s3.signature_version s3v4
+    aws s3 cp --sse=aws:kms --sse-kms-key-id=$KMS_KEY_ID $BACKUP_FILE $BACKUP_BUCKET/tfe-backup/$BACKUP_FILE
 
 #### Step 6. Full Terraform Run
 
-Now that all the data assets are in place, it's time to run the full terraform
-apply, so first plan:
+Now that all data have been migrated it's time to run a terraform plan for the
+remainder of the v3 installation:
 
 `$ terraform plan`
 
-Take a moment and look over the resources it's going to be create. It should be
-considerably smaller than the existing legacy install. Once you're satisfied;
+Take a moment and look over the resources that will be created. It should be
+considerably smaller than the existing legacy install. Once you're satisfied:
 
 `$ terraform apply`
 
-This will take approximately 30 minutes, mostly for the creation and restore of
-the RDS cluster. Once terrform finishes, you'll need to setup the DNS for the
-instance. The `dns_name` output that apply printed out is what you'll need to
-configure the CNAME to point to. *NOTE:* The hostname that is being configured
-as a CNAME must be the same hostname that was provided in the `tfvars` file!
+The apply will take around 30 minutes to create and restore the RDS database,
+though the other resources should finish sooner. If there are any problems at
+this stage, simply run `terraform apply` again.
 
-Once the CNAME is setup, your installation is ready.
+When Terraform apply completes it will output a `dns_name` field. Use this to
+configure DNS for your installation by configuring a CNAME record to point to
+`dns_name`. **NOTE:** The CNAME you configure must match the one specified
+earlier in `tfvars`!
+
+Once the CNAME has propagated, you can view your v3 installation in your browser.
 
 #### Step 7. Verification
 
-Open up `https://<hostname>`, where `hostname` is the value configured in your
-`tfvars` file. You should be presented with a screen indicating that Terraform
-Enterprise is booting. This screen will autoreload and eventually you'll be
-presented with a login screen. Note that due to database sizes and migrations,
-this initial setup may be lengthy, perhaps as long as an hour. If you feel that
-it has gone for too long, contact support for further help.
+Open your selected DNS name in your browser using `https://<hostname>` (HTTPS is
+required). You will see a page indicating that Terraform Enterprise is booting.
+This page automatically refreshes and will redirect you to the login screen once
+the v3 database migrations and boot process have completed. Depending on the
+size of your database this may take some time, possibly up to 1 hour. If you are
+unsure whether your installation is making progress at this point, please reach
+out to HashiCorp for help.
 
-Now you're ready to login, so go right ahead. To verify that the installation
-is complete, browse to a previous Terraform run. If everything loads correctly,
-then all the data assets are in place and your upgrade was successful. If not,
-please contact support for further assistance.
+Once your instance boots you are ready to login with your existing admin or user
+credentials. To verify that the installation is complete, browse to a previous
+Terraform run and inspect the state or secrets (environment variables). If
+everything loads correctly, then data and encryption keys have been successfully
+restored your upgrade was successful. If you cannot login, cannot find previous
+Terraform runs, or secrets are missing, please reach out to HashiCorp for help.

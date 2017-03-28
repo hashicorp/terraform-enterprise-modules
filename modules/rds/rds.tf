@@ -30,6 +30,10 @@ variable "snapshot_identifier" {
   default = ""
 }
 
+variable "db_name" {
+  default = "atlas_production"
+}
+
 resource "aws_db_subnet_group" "rds" {
   name        = "${var.name}"
   description = "${var.name}"
@@ -68,7 +72,7 @@ resource "aws_db_instance" "rds" {
   vpc_security_group_ids    = ["${aws_security_group.rds.id}"]
   backup_retention_period   = "${var.backup_retention_period}"
   storage_type              = "${var.storage_type}"
-  name                      = "${var.snapshot_identifier == "" ? "atlas_production" : ""}"
+  name                      = "${var.db_name}"
   final_snapshot_identifier = "${var.name}"
   storage_encrypted         = true
   kms_key_id                = "${var.kms_key_id}"

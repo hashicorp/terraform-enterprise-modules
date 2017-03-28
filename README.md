@@ -13,8 +13,11 @@ installation for a certain situation.
 
 Please see the documentation for the relevent install flavor:
 
-* [`aws-standard`](aws-standard/) - Terraform manages compute, data layer and Route 53 DNS.
-* [`aws-standard-nodns`](aws-standard-nodns/) - Terraform manages compute and data layer, customer manages DNS separately.
+* [`aws-standard`](aws-standard/) - Terraform manages compute, data layer and (optionally) Route 53 DNS.
 * [`aws-expert`](aws-expert/) - Terraform manages compute layer only, customer manages DNS and data layer separately.
 
-Each install flavor can be used as a Terraform root directory or as a module.
+Each install flavor can either be used as a Terraform root directory or as a module.
+
+## Additional Documentation
+
+Additional supportive documentation can be found in the [`docs`](docs/) subdir.

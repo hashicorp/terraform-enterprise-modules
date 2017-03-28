@@ -23,23 +23,24 @@ on the users environment.
 
 ### Variables
 
-* fqdn: The name that cluster be known as. This value needs to match the DNS setup for proper operations. Example: `tfe-eng01.mycompany.io`
-* cert\_id: An AWS certificate ARN. This is the certification that will be used by the ELB for the cluster. Example: `arn:aws:acm:us-west-2:241656615859:certificate/f32fa674-de62-4681-8035-21a4c81474c6`
-* instance\_subnet\_id: Subnet id of the subnet that the cluster's instance will be placed into. If this is a public subnet, the instance will be assigned a public IP. This is not required as the primary cluster interface is an ELB registered with the hostname. Example: `subnet-0de26b6a`
-* db\_username: Postgresql username connect as. The user must already exist. Example: `terraform`
-* db\_password: Password that will be used to access RDS. Example: `databaseshavesecrets`
-* db\_endpoint: Postgresql host:port to connect to. Example: `postgres01.mycompany.io:5432`
-* db\_database: Postgresql database to use. This must already exist. Example: `tfe`
-* redis\_host: Redis host to connect to. Example: `redis01.mycompany.io`
-* bucket\_name: Name of the S3 bucket to store artifacts used by the cluster into. This bucket is automatically created. We suggest you name it `tfe-${hostname}-data`, as convention.
+* `ami_id`: The ID of a Terraform Enterprise Base AMI. See [`ami-ids`](../docs/ami-ids.md) to look one up.
+* `fqdn` The name that cluster be known as. This value needs to match the DNS setup for proper operations. Example: `tfe-eng01.mycompany.io`
+* `cert_id` An AWS certificate ARN. This is the certification that will be used by the ELB for the cluster. Example: `arn:aws:acm:us-west-2:241656615859:certificate/f32fa674-de62-4681-8035-21a4c81474c6`
+* `instance_subnet_id` Subnet id of the subnet that the cluster's instance will be placed into. If this is a public subnet, the instance will be assigned a public IP. This is not required as the primary cluster interface is an ELB registered with the hostname. Example: `subnet-0de26b6a`
+* `db_username` Postgresql username connect as. The user must already exist. Example: `terraform`
+* `db_password` Password that will be used to access RDS. Example: `databaseshavesecrets`
+* `db_endpoint` Postgresql host:port to connect to. Example: `postgres01.mycompany.io:5432`
+* `db_database` Postgresql database to use. This must already exist. Example: `tfe`
+* `redis_host` Redis host to connect to. Example: `redis01.mycompany.io`
+* `bucket_name` Name of the S3 bucket to store artifacts used by the cluster into. This bucket is automatically created. We suggest you name it `tfe-${hostname}-data`, as convention.
 
 ### Optional Variables
 
 These variables can be populated, but they have defaults that can also be used.
 
-* region: The AWS region to deploy into. Default: `us-west-2`
-* az: The AWS availability zone to use within the region. Default: `us-west-2a`
-* redis\_port: Redis port to connect to. Default: `6379`
+* `region` The AWS region to deploy into. Default: `us-west-2`
+* `az` The AWS availability zone to use within the region. Default: `us-west-2a`
+* `redis_port` Redis port to connect to. Default: `6379`
 
 ### Populating Variables
 

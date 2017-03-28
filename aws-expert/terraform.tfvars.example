@@ -13,6 +13,8 @@
 # db_password =
 # bucket_name =
 # key_name =
+# redis_host =
+# db_endpoint =
 
 # Optional variables
 #
@@ -23,4 +25,5 @@
 # db_instance_class =
 # db_multi_az =
 # db_snapshot_identifier =
+# redis_port =
 # manage_bucket =
