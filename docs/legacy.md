@@ -215,11 +215,10 @@ hooks and callbacks will still be pointing to the prior installation. You will
 need to update these in two places:
 
 - You will need to update the GitHub OAuth Application for Terraform Enterprise
-  so its callback URL references the new hostname. This is required so users can
-  authorize Terraform Enterprise to list their GitHub repos and configure jobs
-  to pull data from GitHub.
+  so its Authorization callback URL references the new hostname. This enables
+  users to link their Terraform Environments and Packer Builds to GitHub.
 
-- Each Terraform Environment and Packer Build Configuration linked to a GitHub
-  Repo will need to be relinked with GitHub by clicking "Update VCS Settings"
-  on the "Integrations" page. This will update GitHub webhooks to point to the
-  new hostname.
+- Each Terraform Environment and Packer Build Configuration that is already
+  linked to a GitHub Repo will need to be relinked with GitHub by clicking
+  "Update VCS Settings" on the "Integrations" page. This will update GitHub
+  webhooks to point to the new hostname.
