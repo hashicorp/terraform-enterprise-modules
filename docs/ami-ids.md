@@ -9,3 +9,4 @@ Terraform Enterprise.
 | TFE Release     | us-west-2      | us-east-1      |
 | --------------- | -------------- | -------------- |
 | **v201703-1**   | `ami-4844d128` | `ami-0273cd14` |
+| **v201703-2**   | `ami-a664f0c6` | `ami-a5dc66b3` |

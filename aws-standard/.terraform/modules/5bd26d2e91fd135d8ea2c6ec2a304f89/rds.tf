@@ -72,11 +72,27 @@ resource "aws_db_instance" "rds" {
   vpc_security_group_ids    = ["${aws_security_group.rds.id}"]
   backup_retention_period   = "${var.backup_retention_period}"
   storage_type              = "${var.storage_type}"
-  name                      = "${var.db_name}"
+  name                      = "${var.snapshot_identifier == "" ? var.db_name : ""}"
   final_snapshot_identifier = "${var.name}"
   storage_encrypted         = true
   kms_key_id                = "${var.kms_key_id}"
   snapshot_identifier       = "${var.snapshot_identifier}"
+
+  # After a snapshot restores, the DB name will be populated from the snapshot,
+  # *but* we currently need to omit the name parameter with the ternary above.
+  # To prevent the effective `name = ""` config from triggering a diff after
+  # initial creation, we need to ignore changes on that field.
+  #
+  # After this PR lands we can revert to just a static name value, removing
+  # both the ternary above and the ignore_changes below:
+  #   https://github.com/hashicorp/terraform/pull/13140
+  lifecycle {
+    ignore_changes = ["name"]
+  }
+
+  timeouts {
+    create = "2h"
+  }
 }
 
 output "database" {

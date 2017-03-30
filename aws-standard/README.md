@@ -44,8 +44,8 @@ These variables can be populated, but they have defaults that can also be used.
 * `db_size_gb` Disk size of the RDS instance to create. Default: `80`
 * `db_instance_class` Instance type of the RDS instance to create. Default: `db.m4.large`
 * `db_multi_az` Configure if the RDS cluster should multiple AZs to improve snapshot performance. Default: `true`
-* `db_snapshot_identifier` Previously made snapshot to restore when RDS is created. This is for migration of data between clusters. Default is to create the database fresh. You'll need to set `db_name` on the first Terraform apply when using this parameter.
-* `db_name` This needs to be set to `""` for ths first run when using `db_snapshot_identifier`. Subsequent runs should omit this value so there is not a terraform plan diff.
+* `db_snapshot_identifier` Previously made snapshot to restore when RDS is created. This is for migration of data between clusters. Default is to create the database fresh.
+* `db_name` This only needs to be set if you're migrating from an RDS instance with a different database name.
 * `zone_id` The id of a Route53 zone that a record for the cluster will be installed into. Leave this blank if you need to manage DNS elsewhere. Example: `ZVEF52R7NLTW6`
 * `hostname` The name that cluster will be registered as. This combined with the zone information will form the DNS name that the cluster is accessed at. See the note in [Delivery](#Delivery) about what this should be. Example: `emp-test`
 

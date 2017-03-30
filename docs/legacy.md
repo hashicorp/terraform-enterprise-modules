@@ -134,6 +134,11 @@ different from the system-wide RDS encryption we just talked about). To restore
 these keys into v3 we will create a special backup from the v2 data that is
 compatible with v3's automatic restore feature.
 
+The tools to perform this step can be found at
+[`hashicorp/tfe-v2-to-v3`](https://github.com/hashicorp/tfe-v2-to-v3). You can
+request access from HashiCorp if you are not able to see this repository.
+Running `make` in that repository will produce `tfe-v2-to-v3.tar.gz`.
+
 Upload `tfe-v2-to-v3.tar.gz` to the v2 bastion host you created earlier (or
 create a new bastion host now).
 
@@ -200,3 +205,21 @@ Terraform run and inspect the state or secrets (environment variables). If
 everything loads correctly, then data and encryption keys have been successfully
 restored your upgrade was successful. If you cannot login, cannot find previous
 Terraform runs, or secrets are missing, please reach out to HashiCorp for help.
+
+### Known Issues
+
+#### GitHub Web Hooks and Callbacks
+
+If you opt to change the hostname during your migration, existing GitHub web
+hooks and callbacks will still be pointing to the prior installation. You will
+need to update these in two places:
+
+- You will need to update the GitHub OAuth Application for Terraform Enterprise
+  so its callback URL references the new hostname. This is required so users can
+  authorize Terraform Enterprise to list their GitHub repos and configure jobs
+  to pull data from GitHub.
+
+- Each Terraform Environment and Packer Build Configuration linked to a GitHub
+  Repo will need to be relinked with GitHub by clicking "Update VCS Settings"
+  on the "Integrations" page. This will update GitHub webhooks to point to the
+  new hostname.
