@@ -1,23 +1,22 @@
 # Terraform Enterprise Modules
 
-These are Terraform modules for setting up infrastructure that can host
-Terraform Enterprise inside a customer's infrastructure (aka Private Terraform
-Enterprise).
+These are Terraform modules for setting up Terraform Enterprise inside a customer's infrastructure (aka Private Terraform Enterprise).
 
-![aws-infra-architecture](docs/assets/aws-infra-architecture.png)
+[![terraform-enterprise-banner](docs/assets/terraform-enterprise-banner.png)](https://www.hashicorp.com/products/terraform/)
 
 ## Install Flavors
 
-Each of the `aws-` prefixed directories contains a full Terraform Enterprise
-installation for a certain situation.
+![aws-infra-architecture](docs/assets/aws-infra-architecture.png)
 
-Please see the documentation for the relevent install flavor:
+Each of the `aws-` prefixed directories contains a full Terraform Enterprise installation for a certain situation.
 
-* [`aws-standard`](aws-standard/) - Terraform manages compute, data layer and (optionally) Route 53 DNS.
-* [`aws-expert`](aws-expert/) - Terraform manages compute layer only, customer manages DNS and data layer separately.
+Please see the documentation for the relevant install flavor:
 
-Each install flavor can either be used as a Terraform root directory or as a module.
+* [`aws-standard`](aws-standard/) - Manages compute, data layer and (optionally) Route 53 DNS.
+* [`aws-expert`](aws-expert/) - Manages compute layer only, customer manages DNS and data layer separately.
 
-## Additional Documentation
+Each install flavor can either be used as a Terraform root directory or as a module invoked from other Terraform config.
 
-Additional supportive documentation can be found in the [`docs`](docs/) subdir.
+## Documentation
+
+Further documentation can be found in the [`docs`](docs/) subdir.
