@@ -39,7 +39,6 @@ on the users environment.
 These variables can be populated, but they have defaults that can also be used.
 
 * `region` The AWS region to deploy into. Default: `us-west-2`
-* `az` The AWS availability zone to use within the region. Default: `us-west-2a`
 * `redis_port` Redis port to connect to. Default: `6379`
 
 ### Populating Variables

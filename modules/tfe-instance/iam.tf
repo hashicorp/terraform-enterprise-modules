@@ -18,8 +18,8 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "tfe_instance" {
-  name  = "tfe_instance_${var.installation_id}"
-  roles = ["${aws_iam_role.tfe_iam_role.name}"]
+  name = "tfe_instance_${var.installation_id}"
+  role = "${aws_iam_role.tfe_iam_role.name}"
 }
 
 data "aws_iam_policy_document" "tfe-perms" {

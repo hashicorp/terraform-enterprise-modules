@@ -1,7 +1,5 @@
 variable "hostname" {}
 
-variable "az" {}
-
 variable "vpc_id" {}
 
 variable "cert_id" {}

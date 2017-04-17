@@ -40,7 +40,6 @@ on the users environment.
 These variables can be populated, but they have defaults that can also be used.
 
 * `region`: The AWS region to deploy into. Default: `us-west-2`
-* `az`: The AWS availability zone to use within the region. Default: `us-west-2a`
 * `manage_bucket`: Indicate if this terraform state should create and own the bucket. Set this to false if you are reusing an existing bucket.
 * `kms_key_id`: Specify the ARN for a KMS key to use rather than having one
   created automatically.

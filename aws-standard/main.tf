@@ -1,3 +1,7 @@
+terraform {
+  required_version = ">= 0.9.3"
+}
+
 variable "fqdn" {
   description = "The fully qualified domain name the cluster is accessible as"
 }
@@ -63,11 +67,6 @@ variable "ami_id" {
 variable "instance_type" {
   description = "AWS instance type to use"
   default     = "m4.2xlarge"
-}
-
-variable "az" {
-  description = "AWS availability zone to place instance into"
-  default     = "us-west-2a"
 }
 
 data "aws_subnet" "instance" {
@@ -140,7 +139,6 @@ module "instance" {
   ami_id               = "${var.ami_id}"
   instance_type        = "${var.instance_type}"
   hostname             = "${var.fqdn}"
-  az                   = "${var.az}"
   vpc_id               = "${data.aws_subnet.instance.vpc_id}"
   cert_id              = "${var.cert_id}"
   instance_subnet_id   = "${var.instance_subnet_id}"

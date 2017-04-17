@@ -71,11 +71,6 @@ variable "instance_type" {
   default     = "m4.2xlarge"
 }
 
-variable "az" {
-  description = "AWS availability zone to place instance into"
-  default     = "us-west-2a"
-}
-
 data "aws_subnet" "instance" {
   id = "${var.instance_subnet_id}"
 }
@@ -97,7 +92,6 @@ module "instance" {
   ami_id             = "${var.ami_id}"
   instance_type      = "${var.instance_type}"
   hostname           = "${var.fqdn}"
-  az                 = "${var.az}"
   vpc_id             = "${data.aws_subnet.instance.vpc_id}"
   cert_id            = "${var.cert_id}"
   instance_subnet_id = "${var.instance_subnet_id}"
