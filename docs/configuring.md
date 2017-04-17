@@ -79,6 +79,10 @@ you can select other git providers such as GitLab or Bitbucket from the dropdown
 
 1. Fill in HTTP URL and API URL in TFE for your git provider
 
+	> Note to users of github.com - due to a bug in GitHub's OAuth
+	authentication, the HTTP URL must be set to https://github.com. This differs
+	from the example text, which includes a www.
+
 2. Create a new OAuth application in GitHub (for example,
 	<https://github.com/settings/applications/new>)
 

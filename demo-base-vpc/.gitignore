@@ -1,0 +1,13 @@
+## General operating system artefacts
+.DS_Store
+
+## Vagrant artefacts
+.vagrant/
+ 
+## Terraform artefacts
+.terraform/
+*.tfstate*
+
+## IntelliJ
+.idea/
+*.iml

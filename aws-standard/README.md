@@ -14,6 +14,8 @@ on the users environment.
 
 * AWS IAM credentials capable of creating new IAM roles configuring various services. We suggest you use an admin role for this. The credentials are only used for setup, during runtime only an assumed role is used.
 * AWS VPC containing at least 2 subnets. These will be used to launch the cluster into. Subnets do not need to be public, but they do need an internet gateway at present.
+* SSH keypair configured with AWS EC2. This will be used to configured support access to the cluster.
+  * To create a new one: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html
 * A TLS certification registered with AWS Certificate Manager. This can be one created by CM for a hostname or the certificate can be imported into it.
   * To create a new one: https://console.aws.amazon.com/acm/home#/wizard/
   * To import an existing cert: https://console.aws.amazon.com/acm/home#/importwizard/
@@ -40,6 +42,8 @@ These variables can be populated, but they have defaults that can also be used.
 * `region`: The AWS region to deploy into. Default: `us-west-2`
 * `az`: The AWS availability zone to use within the region. Default: `us-west-2a`
 * `manage_bucket`: Indicate if this terraform state should create and own the bucket. Set this to false if you are reusing an existing bucket.
+* `kms_key_id`: Specify the ARN for a KMS key to use rather than having one
+  created automatically.
 * `db_username` Username that will be used to access RDS. Default: `atlas`
 * `db_size_gb` Disk size of the RDS instance to create. Default: `80`
 * `db_instance_class` Instance type of the RDS instance to create. Default: `db.m4.large`

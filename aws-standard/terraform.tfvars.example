@@ -18,6 +18,7 @@
 #
 # region =
 # az =
+# kms_key_id =
 # db_username =
 # db_size_gb =
 # db_instance_class =

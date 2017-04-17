@@ -4,12 +4,12 @@ variable "fqdn" {
 
 variable "hostname" {
   description = "The name the cluster will be register as under the zone (optional if separately managing DNS)"
-  default = ""
+  default     = ""
 }
 
 variable "zone_id" {
   description = "The route53 zone id to register the hostname in (optional if separately managing DNS)"
-  default = ""
+  default     = ""
 }
 
 variable "cert_id" {
@@ -85,7 +85,7 @@ variable "db_instance_class" {
 
 variable "db_name" {
   description = "Name of the Postgres database. Set this blank on the first run if you are restoring using a snapshot_identifier. Subsequent runs should let it take its default value."
-  default = "atlas_production"
+  default     = "atlas_production"
 }
 
 // Multi AZ allows database snapshots to be taken without incurring an I/O
@@ -105,6 +105,11 @@ variable "bucket_force_destroy" {
   default     = false
 }
 
+variable "kms_key_id" {
+  description = "A KMS Key to use rather than having a new one created"
+  default     = ""
+}
+
 # A random identifier to use as a suffix on resource names to prevent
 # collisions when multiple instances of TFE are installed in a single AWS
 # account.
@@ -117,6 +122,7 @@ provider "aws" {
 }
 
 resource "aws_kms_key" "key" {
+  count       = "${var.kms_key_id != "" ? 0 : 1}"
   description = "TFE resource encryption key"
 }
 
@@ -148,7 +154,7 @@ module "instance" {
   redis_port           = "${module.redis.port}"
   bucket_name          = "${var.bucket_name}"
   bucket_region        = "${var.region}"
-  kms_key_id           = "${aws_kms_key.key.arn}"
+  kms_key_id           = "${var.kms_key_id != "" ? var.kms_key_id : aws_kms_key.key.arn}"
   bucket_force_destroy = "${var.bucket_force_destroy}"
   manage_bucket        = "${var.manage_bucket}"
 }
@@ -167,6 +173,7 @@ module "db" {
   vpc_id                  = "${data.aws_subnet.instance.vpc_id}"
   backup_retention_period = "31"
   storage_type            = "gp2"
+  kms_key_id              = "${var.kms_key_id != "" ? var.kms_key_id : aws_kms_key.key.arn}"
   kms_key_id              = "${aws_kms_key.key.arn}"
   snapshot_identifier     = "${var.db_snapshot_identifier}"
   db_name                 = "${var.db_name}"
@@ -182,7 +189,7 @@ module "redis" {
 }
 
 output "kms_key_id" {
-  value = "${aws_kms_key.key.arn}"
+  value = "${var.kms_key_id != "" ? var.kms_key_id : aws_kms_key.key.arn}"
 }
 
 output "url" {
