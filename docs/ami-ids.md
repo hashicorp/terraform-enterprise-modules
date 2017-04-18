@@ -8,8 +8,14 @@ Terraform Enterprise.
 
 See also the [CHANGELOG](../CHANGELOG.md).
 
-| TFE Release     | us-west-2      | us-east-1      |
-| --------------- | -------------- | -------------- |
-| **v201703-1**   | `ami-4844d128` | `ami-0273cd14` |
-| **v201703-2**   | `ami-a664f0c6` | `ami-a5dc66b3` |
-| **v201704-1**   | `ami-f81e8898` | `ami-20ab2836` |
+| TFE Release                                | Region        | AMI ID         |
+| ------------------------------------------ | ------------- | -------------- |
+| **[v201703-1](../CHANGELOG.md#v201703-1)** | us-west-2     | `ami-4844d128` |
+|                                            | us-east-1     | `ami-0273cd14` |
+| **[v201703-2](../CHANGELOG.md#v201703-2)** | us-west-2     | `ami-a664f0c6` |
+|                                            | us-east-1     | `ami-a5dc66b3` |
+| **[v201704-1](../CHANGELOG.md#v201704-1)** | us-west-2     | `ami-f81e8898` |
+|                                            | us-east-1     | `ami-20ab2836` |
+| **[v201704-2](../CHANGELOG.md#v201704-2)** | us-west-2     | `ami-3be5785b` |
+|                                            | us-east-1     | `ami-a0b222b6` |
+|                                            | us-gov-west-1 | `ami-ebe1658a` |
