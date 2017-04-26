@@ -120,9 +120,49 @@ provider "aws" {
   region = "${var.region}"
 }
 
+data "aws_caller_identity" "current" {}
+
+output "account_id" {
+  value = "${data.aws_caller_identity.current.account_id}"
+}
+
 resource "aws_kms_key" "key" {
   count       = "${var.kms_key_id != "" ? 0 : 1}"
   description = "TFE resource encryption key"
+
+  tags {
+    Name = "terraform_enterprise-${random_id.installation-id.hex}"
+  }
+
+  # This references the role created by the instance module as a name
+  # rather than a resource attribute because it causes too much churn.
+  # So if the name is changed in the instance module, you need to change
+  # the name here too.
+  policy = <<-JSON
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Allow KMS for TFE creator",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": [
+          "${data.aws_caller_identity.current.arn}",
+          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
+          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/tfe_iam_role-${random_id.installation-id.hex}"
+        ]
+      },
+      "Action": "kms:*",
+      "Resource": "*"
+    }
+  ]
+}
+  JSON
+}
+
+resource "aws_kms_alias" "key" {
+  name          = "alias/terraform_enterprise-${random_id.installation-id.hex}"
+  target_key_id = "${coalesce(var.kms_key_id, join("", aws_kms_key.key.*.key_id))}"
 }
 
 module "route53" {
@@ -152,7 +192,7 @@ module "instance" {
   redis_port           = "${module.redis.port}"
   bucket_name          = "${var.bucket_name}"
   bucket_region        = "${var.region}"
-  kms_key_id           = "${var.kms_key_id != "" ? var.kms_key_id : aws_kms_key.key.arn}"
+  kms_key_id           = "${coalesce(var.kms_key_id, join("", aws_kms_key.key.*.arn))}"
   bucket_force_destroy = "${var.bucket_force_destroy}"
   manage_bucket        = "${var.manage_bucket}"
 }
@@ -171,8 +211,7 @@ module "db" {
   vpc_id                  = "${data.aws_subnet.instance.vpc_id}"
   backup_retention_period = "31"
   storage_type            = "gp2"
-  kms_key_id              = "${var.kms_key_id != "" ? var.kms_key_id : aws_kms_key.key.arn}"
-  kms_key_id              = "${aws_kms_key.key.arn}"
+  kms_key_id              = "${coalesce(var.kms_key_id, join("", aws_kms_key.key.*.arn))}"
   snapshot_identifier     = "${var.db_snapshot_identifier}"
   db_name                 = "${var.db_name}"
 }
@@ -187,7 +226,7 @@ module "redis" {
 }
 
 output "kms_key_id" {
-  value = "${var.kms_key_id != "" ? var.kms_key_id : aws_kms_key.key.arn}"
+  value = "${coalesce(var.kms_key_id, join("", aws_kms_key.key.*.arn))}"
 }
 
 output "url" {

@@ -11,6 +11,23 @@ Where:
  * `YYYY` and `MM` are the year and month of the release.
  * `N` is increased with each release in a given month, starting with `1`
 
+## v201704-3
+
+APPLICATION LEVEL CHANGES:
+
+(none)
+
+MACHINE IMAGE CHANGES:
+
+ * Properly handle database passwords with non-alphanumeric characters.
+ * Remove nginx's `client_max_body_size` limit so users can upload files larger than 1MB
+
+TERRAFORM CONFIG CHANGES:
+
+ * Fix var reference issues when specifying `kms_key_id` as an input
+ * Add explicit IAM policy to KMS key when Terraform manages it
+ * Add explicit KMS Key Alias for more easily referencing the KMS key in the AWS Web Console
+
 ## v201704-2
 
 FEATURES:

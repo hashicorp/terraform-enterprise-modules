@@ -18,4 +18,5 @@ See also the [CHANGELOG](../CHANGELOG.md).
 |                                            | us-east-1     | `ami-20ab2836` |
 | **[v201704-2](../CHANGELOG.md#v201704-2)** | us-west-2     | `ami-3be5785b` |
 |                                            | us-east-1     | `ami-a0b222b6` |
-|                                            | us-gov-west-1 | `ami-ebe1658a` |
+| **[v201704-3](../CHANGELOG.md#v201704-3)** | us-west-2     | `ami-8471ede4` |
+|                                            | us-east-1     | `ami-33841b25` |
