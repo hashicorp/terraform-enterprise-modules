@@ -51,10 +51,6 @@ output "s3_vpce_id" {
   value = "${aws_vpc_endpoint.private_s3.id}"
 }
 
-output "public_zone_id" {
-  value = "${aws_route53_zone.vpc_public.zone_id}"
-}
-
 output "cidr_block" {
   value = "${aws_vpc.vpc.cidr_block}"
 }
