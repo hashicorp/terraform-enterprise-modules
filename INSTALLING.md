@@ -2,7 +2,7 @@
 
 Terraform Enterprise currently targets Amazon Web Services environments. Support for additional infrastructure providers is planned.
 
-## Amazon Web Services (AWS)`
+## Amazon Web Services (AWS)
 
 ![aws-infra-architecture](docs/assets/aws-infra-architecture.png)
 
@@ -16,13 +16,14 @@ In AWS, a Terraform Enterprise install consists of:
   * ElastiCache Redis for ephemeral application storage
   * An S3 Bucket for object storage
 
-Each of the `aws-` prefixed directories contains a full Terraform Enterprise installation for a certain situation.
+### Primary Installation Config Files
 
-Please see the documentation for the relevant install flavor:
+The [`aws-standard`](aws-standard/) directory contains the primary Terraform Enterprise installation config files. Its [`README`](aws-standard/README.md) is the next step for learning about how to install Terraform Enterprise.
 
-* [`aws-standard`](aws-standard/) - Manages compute, data layer and (optionally) Route 53 DNS.
-* [`aws-expert`](aws-expert/) - Manages compute layer only, customer manages DNS and data layer separately.
+### Tertiary Terraform Configs
+
+The [`aws-extra`](aws-extra/) directory contains supplamentary configs. Its [`README`](aws-extra/README.md) contains a list of descriptions of the configs available.
 
 ## Documentation
 
-Further documentation can be found in the [`docs`](docs/) subdir.
+Further documentation about various aspects of the Terraform Enterprise install can be found in the [`docs`](docs/) subdir.
