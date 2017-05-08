@@ -11,6 +11,30 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
+## vNext (Unreleased)
+
+APPLICATION LEVEL CHANGES:
+
+(none)
+
+MACHINE IMAGE CHANGES:
+
+ * Fix an issue preventing the `hashicorp-support` command from successfully
+   generating a diagnostic bundle.
+
+TERRAFORM CONFIG CHANGES:
+
+ * Make `region` a required input variable to prevent any confusion from the
+   default value being set to an unexpected value. Customers who were not
+   already setting this can populate it with the former default: `"us-west-2"`
+ * Reorganize supportive modules into a separate `aws-extra` directory
+ * Remove a stale output being referenced in `vpc-base`
+ * Work around a Terraform bug that prevented the outputs of `vpc-base` from
+   being used as inputs for data subnets.
+ * Explicitly specify the IAM policy of the KMS key when creating it.
+ * Add an Alias to the created KMS key so it is more easily identifiable AWS
+   console.
+
 ## v201704-3
 
 APPLICATION LEVEL CHANGES:

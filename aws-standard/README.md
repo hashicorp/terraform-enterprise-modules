@@ -33,10 +33,11 @@ The following details will be requested during the application bootstrapping pro
   * Email address to use as the sender for emails originating from TFE
 * (Optional) **Twilio Credentials**: Terraform Enterprise can use Twilio for SMS-based 2-factor authentication. If Twilio is not configurated, virtual MFA device based 2FA (e.g. Google Authenticator) will still be available.
 
-### Variables
+### Required Variables
 
 The following variables are required inputs and must be populated prior to beginning installation.
 
+* `region`: The AWS region to deploy into.
 * `ami_id`: The ID of a Terraform Enterprise Base AMI. See [`ami-ids`](../docs/ami-ids.md) to look one up.
 * `fqdn`: The name that cluster be known as. This value needs to match the DNS setup for proper operations. Example: `tfe-eng01.mycompany.io`
 * `cert_id`: An AWS certificate ARN. This is the certification that will be used by the ELB for the cluster. Example: `arn:aws:acm:us-west-2:241656615859:certificate/f32fa674-de62-4681-8035-21a4c81474c6`
@@ -51,7 +52,6 @@ The following variables are required inputs and must be populated prior to begin
 
 These variables can be populated, but they have defaults that can also be used.
 
-* `region`: The AWS region to deploy into. Default: `us-west-2`
 * `manage_bucket`: Indicate if this terraform state should create and own the bucket. Set this to false if you are reusing an existing bucket.
 * `kms_key_id`: Specify the ARN for a KMS key to use rather than having one
   created automatically.
@@ -62,7 +62,7 @@ These variables can be populated, but they have defaults that can also be used.
 * `db_snapshot_identifier` Previously made snapshot to restore when RDS is created. This is for migration of data between clusters. Default is to create the database fresh.
 * `db_name` This only needs to be set if you're migrating from an RDS instance with a different database name.
 * `zone_id` The id of a Route53 zone that a record for the cluster will be installed into. Leave this blank if you need to manage DNS elsewhere. Example: `ZVEF52R7NLTW6`
-* `hostname` The name that cluster will be registered as. This combined with the zone information will form the DNS name that the cluster is accessed at. See the note in [Delivery](#Delivery) about what this should be. Example: `emp-test`
+* `hostname` If specifying `zone_id`, this should be set to the name that is used for the record to be registered with the zone. This value combined with the zone information will form the full DNS name for TFE. Example: `emp-test`
 
 ### Populating Variables
 

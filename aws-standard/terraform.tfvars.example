@@ -2,10 +2,9 @@
 
 # Required Variables
 #
+# region =
 # ami_id =
 # fqdn =
-# hostname =
-# zone_id =
 # cert_id =
 # instance_subnet_id =
 # elb_subnet_id =
@@ -16,8 +15,6 @@
 
 # Optional variables
 #
-# region =
-# az =
 # kms_key_id =
 # db_username =
 # db_size_gb =
@@ -25,3 +22,5 @@
 # db_multi_az =
 # db_snapshot_identifier =
 # manage_bucket =
+# zone_id =
+# hostname =

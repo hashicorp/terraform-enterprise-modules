@@ -57,7 +57,6 @@ variable "db_username" {
 
 variable "region" {
   description = "AWS region to place cluster into"
-  default     = "us-west-2"
 }
 
 variable "ami_id" {

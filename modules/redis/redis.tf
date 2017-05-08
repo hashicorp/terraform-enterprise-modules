@@ -56,7 +56,10 @@ resource "aws_security_group" "redis" {
 resource "aws_elasticache_subnet_group" "redis" {
   name        = "${var.name}"
   description = "${var.name} subnet group"
-  subnet_ids  = "${var.subnet_ids}"
+  # In order for this module to work properly with the aws-extra/base-vpc
+  # module, subnet_ids needs to be wrapped in square brackets even though the
+  # variable is declared as a list until https://github.com/hashicorp/terraform/issues/13103 is resolved.
+  subnet_ids  = ["${var.subnet_ids}"]
 }
 
 resource "aws_elasticache_cluster" "redis" {

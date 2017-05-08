@@ -37,7 +37,10 @@ variable "db_name" {
 resource "aws_db_subnet_group" "rds" {
   name        = "${var.name}"
   description = "${var.name}"
-  subnet_ids  = "${var.subnet_ids}"
+  # In order for this module to work properly with the aws-extra/base-vpc
+  # module, subnet_ids needs to be wrapped in square brackets even though the
+  # variable is declared as a list until https://github.com/hashicorp/terraform/issues/13103 is resolved.
+  subnet_ids  = ["${var.subnet_ids}"]
 }
 
 resource "aws_security_group" "rds" {
