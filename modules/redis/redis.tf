@@ -8,7 +8,10 @@ variable "subnet_ids" {
   type = "list"
 }
 
+variable "redis_security_group" {}
+
 variable "vpc_id" {}
+
 variable "vpc_cidr" {}
 
 variable "port" {
@@ -32,6 +35,7 @@ resource "aws_elasticache_parameter_group" "redis" {
 }
 
 resource "aws_security_group" "redis" {
+  count = "${var.redis_security_group != "" ? 0 : 1}"
   vpc_id = "${var.vpc_id}"
 
   ingress {
@@ -71,7 +75,7 @@ resource "aws_elasticache_cluster" "redis" {
   num_cache_nodes      = "1"
   parameter_group_name = "${aws_elasticache_parameter_group.redis.name}"
   subnet_group_name    = "${aws_elasticache_subnet_group.redis.name}"
-  security_group_ids   = ["${aws_security_group.redis.id}"]
+  security_group_ids   = ["${coalesce(var.redis_security_group, aws_security_group.redis.id)}"]
 }
 
 output "host" {

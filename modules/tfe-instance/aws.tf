@@ -18,6 +18,14 @@ variable "ami_id" {}
 
 variable "instance_type" {}
 
+variable "internal_security_group" {}
+
+variable "external_security_group" {}
+
+variable "instance_iam_role" {}
+
+variable "instance_iam_profile" {}
+
 variable "db_username" {}
 
 variable "db_password" {}
@@ -33,6 +41,8 @@ variable "redis_port" {}
 variable "kms_key_id" {}
 
 resource "aws_security_group" "ptfe" {
+  count = "${var.internal_security_group != "" ? 0 : 1}"
+
   vpc_id = "${var.vpc_id}"
 
   ingress {
@@ -71,6 +81,8 @@ resource "aws_security_group" "ptfe" {
 }
 
 resource "aws_security_group" "ptfe-external" {
+  count = "${var.external_security_group != "" ? 0 : 1}"
+
   vpc_id = "${var.vpc_id}"
 
   ingress {
@@ -112,7 +124,7 @@ resource "aws_launch_configuration" "ptfe" {
   image_id             = "${var.ami_id}"
   instance_type        = "${var.instance_type}"
   key_name             = "${var.key_name}"
-  security_groups      = ["${aws_security_group.ptfe.id}"]
+  security_groups      = ["${coalesce(var.internal_security_group, aws_security_group.ptfe.id)}"]
   iam_instance_profile = "${aws_iam_instance_profile.tfe_instance.name}"
 
   root_block_device {
@@ -188,7 +200,7 @@ KMS_KEY_ID="${var.kms_key_id}"
 
 resource "aws_elb" "ptfe" {
   subnets         = ["${var.elb_subnet_id}"]
-  security_groups = ["${aws_security_group.ptfe-external.id}"]
+  security_groups = ["${coalesce(var.external_security_group, aws_security_group.ptfe-external.id)}"]
 
   listener {
     instance_port      = 8080

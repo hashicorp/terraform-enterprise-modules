@@ -63,6 +63,27 @@ variable "ami_id" {
   description = "The AMI of a Terraform Enterprise Base image"
 }
 
+
+variable "instance_role_arn" {
+  description = "An existing IAM role for the instance"
+  default     = ""
+}
+
+variable "instance_profile_arn" {
+  description = "An existing IAM profile for the instance"
+  default     = ""
+}
+
+variable "internal_security_group" {
+  description = "An existing Security Group for internal communication"
+  default     = ""
+}
+
+variable "external_security_group" {
+  description = "An existing Security Group for external communication"
+  default     = ""
+}
+
 variable "instance_type" {
   description = "AWS instance type to use"
   default     = "m4.2xlarge"
@@ -95,6 +116,16 @@ variable "db_multi_az" {
 
 variable "db_snapshot_identifier" {
   description = "Snapshot of database to use upon creation of RDS"
+  default     = ""
+}
+
+variable "rds_security_group" {
+  description = "An existing Security Group for RDS communication"
+  default     = ""
+}
+
+variable "redis_security_group" {
+  description = "An existing Security Group for redis communication"
   default     = ""
 }
 
@@ -148,7 +179,7 @@ resource "aws_kms_key" "key" {
         "AWS": [
           "${data.aws_caller_identity.current.arn}",
           "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
-          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/tfe_iam_role-${random_id.installation-id.hex}"
+          "${coalesce(var.instance_role_arn ,join(",", "arn:aws:iam::", data.aws_caller_identity.current.account_id, ":role/tfe_iam_role-", random_id.installation-id.hex))}"
         ]
       },
       "Action": "kms:*",
@@ -173,27 +204,31 @@ module "route53" {
 }
 
 module "instance" {
-  source               = "../modules/tfe-instance"
-  installation_id      = "${random_id.installation-id.hex}"
-  ami_id               = "${var.ami_id}"
-  instance_type        = "${var.instance_type}"
-  hostname             = "${var.fqdn}"
-  vpc_id               = "${data.aws_subnet.instance.vpc_id}"
-  cert_id              = "${var.cert_id}"
-  instance_subnet_id   = "${var.instance_subnet_id}"
-  elb_subnet_id        = "${var.elb_subnet_id}"
-  key_name             = "${var.key_name}"
-  db_username          = "${var.db_username}"
-  db_password          = "${var.db_password}"
-  db_endpoint          = "${module.db.endpoint}"
-  db_database          = "${module.db.database}"
-  redis_host           = "${module.redis.host}"
-  redis_port           = "${module.redis.port}"
-  bucket_name          = "${var.bucket_name}"
-  bucket_region        = "${var.region}"
-  kms_key_id           = "${coalesce(var.kms_key_id, join("", aws_kms_key.key.*.arn))}"
-  bucket_force_destroy = "${var.bucket_force_destroy}"
-  manage_bucket        = "${var.manage_bucket}"
+  source                  = "../modules/tfe-instance"
+  installation_id         = "${random_id.installation-id.hex}"
+  ami_id                  = "${var.ami_id}"
+  instance_type           = "${var.instance_type}"
+  hostname                = "${var.fqdn}"
+  vpc_id                  = "${data.aws_subnet.instance.vpc_id}"
+  cert_id                 = "${var.cert_id}"
+  instance_subnet_id      = "${var.instance_subnet_id}"
+  elb_subnet_id           = "${var.elb_subnet_id}"
+  key_name                = "${var.key_name}"
+  db_username             = "${var.db_username}"
+  db_password             = "${var.db_password}"
+  db_endpoint             = "${module.db.endpoint}"
+  db_database             = "${module.db.database}"
+  internal_security_group = "${var.internal_security_group}"
+  external_security_group = "${var.external_security_group}"
+  instance_iam_role       = "${var.instance_role_arn}"
+  instance_iam_profile    =  "${var.instance_profile_arn}"
+  redis_host              = "${module.redis.host}"
+  redis_port              = "${module.redis.port}"
+  bucket_name             = "${var.bucket_name}"
+  bucket_region           = "${var.region}"
+  kms_key_id              = "${coalesce(var.kms_key_id, join("", aws_kms_key.key.*.arn))}"
+  bucket_force_destroy    = "${var.bucket_force_destroy}"
+  manage_bucket           = "${var.manage_bucket}"
 }
 
 module "db" {
@@ -205,6 +240,7 @@ module "db" {
   password                = "${var.db_password}"
   storage_gbs             = "${var.db_size_gb}"
   subnet_ids              = "${var.data_subnet_ids}"
+  rds_security_groups     = "${var.rds_security_group}"
   version                 = "9.4.7"
   vpc_cidr                = "0.0.0.0/0"
   vpc_id                  = "${data.aws_subnet.instance.vpc_id}"
@@ -216,12 +252,14 @@ module "db" {
 }
 
 module "redis" {
-  source        = "../modules/redis"
-  name          = "tfe-${random_id.installation-id.hex}"
-  subnet_ids    = "${var.data_subnet_ids}"
-  vpc_cidr      = "0.0.0.0/0"
-  vpc_id        = "${data.aws_subnet.instance.vpc_id}"
-  instance_type = "cache.m3.medium"
+  source                = "../modules/redis"
+  name                  = "tfe-${random_id.installation-id.hex}"
+  subnet_ids            = "${var.data_subnet_ids}"
+  redis_security_groups = "${var.redis_security_group}"
+
+  vpc_cidr              = "0.0.0.0/0"
+  vpc_id                = "${data.aws_subnet.instance.vpc_id}"
+  instance_type         = "cache.m3.medium"
 }
 
 output "kms_key_id" {

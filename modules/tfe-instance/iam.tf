@@ -1,4 +1,5 @@
 resource "aws_iam_role" "tfe_iam_role" {
+  count = "${var.instance_role_arn != "" ? 0 : 1}"
   name = "tfe_iam_role-${var.installation_id}"
 
   assume_role_policy = <<EOF
@@ -18,11 +19,13 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "tfe_instance" {
+  count = "${var.instance_profile_arn != "" ? 0 : 1}"
   name = "tfe_instance_${var.installation_id}"
-  role = "${aws_iam_role.tfe_iam_role.name}"
+  role = "${coalesce(var.instance_role_arn, aws_iam_role.tfe_iam_role.name)}"
 }
 
 data "aws_iam_policy_document" "tfe-perms" {
+  count = "${var.instance_role_arn != "" ? 0 : 1}"
   statement {
     sid    = "AllowKMSEncryptDecrypt"
     effect = "Allow"
@@ -66,6 +69,8 @@ data "aws_iam_policy_document" "tfe-perms" {
 }
 
 resource "aws_iam_role_policy" "tfe-perms" {
+  count = "${var.instance_role_arn != "" ? 0 : 1}"
+
   name   = "TFE-${var.installation_id}"
   role   = "${aws_iam_role.tfe_iam_role.name}"
   policy = "${data.aws_iam_policy_document.tfe-perms.json}"
