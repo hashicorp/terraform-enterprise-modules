@@ -12,7 +12,7 @@ variable "subnet_ids" {
   type = "list"
 }
 
-variable "rds_security_groups" {}
+variable "rds_security_group" {}
 
 variable "username" {}
 
@@ -75,7 +75,7 @@ resource "aws_db_instance" "rds" {
   username                  = "${var.username}"
   password                  = "${var.password}"
   instance_class            = "${var.instance_class}"
-  vpc_security_group_ids    = ["${coalesce(var.rds_security_groups, aws_security_group.rds.id)}"]
+  vpc_security_group_ids    = ["${coalesce(var.rds_security_group, aws_security_group.rds.id)}"]
   backup_retention_period   = "${var.backup_retention_period}"
   storage_type              = "${var.storage_type}"
   name                      = "${var.snapshot_identifier == "" ? var.db_name : ""}"

@@ -22,9 +22,9 @@ variable "internal_security_group" {}
 
 variable "external_security_group" {}
 
-variable "instance_iam_role" {}
+variable "instance_role_arn" {}
 
-variable "instance_iam_profile" {}
+variable "instance_profile_arn" {}
 
 variable "db_username" {}
 
