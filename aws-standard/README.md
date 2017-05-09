@@ -55,14 +55,20 @@ These variables can be populated, but they have defaults that can also be used.
 * `manage_bucket`: Indicate if this terraform state should create and own the bucket. Set this to false if you are reusing an existing bucket.
 * `kms_key_id`: Specify the ARN for a KMS key to use rather than having one
   created automatically.
-* `db_username` Username that will be used to access RDS. Default: `atlas`
-* `db_size_gb` Disk size of the RDS instance to create. Default: `80`
-* `db_instance_class` Instance type of the RDS instance to create. Default: `db.m4.large`
-* `db_multi_az` Configure if the RDS cluster should multiple AZs to improve snapshot performance. Default: `true`
-* `db_snapshot_identifier` Previously made snapshot to restore when RDS is created. This is for migration of data between clusters. Default is to create the database fresh.
-* `db_name` This only needs to be set if you're migrating from an RDS instance with a different database name.
-* `zone_id` The id of a Route53 zone that a record for the cluster will be installed into. Leave this blank if you need to manage DNS elsewhere. Example: `ZVEF52R7NLTW6`
-* `hostname` If specifying `zone_id`, this should be set to the name that is used for the record to be registered with the zone. This value combined with the zone information will form the full DNS name for TFE. Example: `emp-test`
+* `db_username`: Username that will be used to access RDS. Default: `atlas`
+* `db_size_gb`: Disk size of the RDS instance to create. Default: `80`
+* `db_instance_class`: Instance type of the RDS instance to create. Default: `db.m4.large`
+* `db_multi_az`: Configure if the RDS cluster should multiple AZs to improve snapshot performance. Default: `true`
+* `db_snapshot_identifier`: Previously made snapshot to restore when RDS is created. This is for migration of data between clusters. Default is to create the database fresh.
+* `db_name`: This only needs to be set if you're migrating from an RDS instance with a different database name.
+* `zone_id`: The id of a Route53 zone that a record for the cluster will be installed into. Leave this blank if you need to manage DNS elsewhere. Example: `ZVEF52R7NLTW6`
+* `hostname`: If specifying `zone_id`, this should be set to the name that is used for the record to be registered with the zone. This value combined with the zone information will form the full DNS name for TFE. Example: `emp-test`
+* `instance_role_arn`: Specify the ARN for the instance's IAM role rather than having one created.
+* `instance_profile_arn`: Specify the ARN for the instance's IAM profile rather than having one created.
+* `rds_security_group`: Specify a Security Group for RDS rather than having one created.
+* `redis_security_group`: Specify a Security Group for Redis rather than having one created.
+* `internal_security_group`: Specify a Security Group for internal communications rather than having one created.
+* `external_security_group`: Specify a Security Group for external communications rather than having one created.
 
 ### Populating Variables
 
