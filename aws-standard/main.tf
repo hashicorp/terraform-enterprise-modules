@@ -108,6 +108,16 @@ variable "kms_key_id" {
   default     = ""
 }
 
+variable "arn_partition" {
+  description = "AWS partition to use (used mostly by govcloud)"
+  default     = "aws"
+}
+
+variable "internal_elb" {
+  description = "Indicates that this installation is to be accessed only by a private subnet"
+  default     = false
+}
+
 # A random identifier to use as a suffix on resource names to prevent
 # collisions when multiple instances of TFE are installed in a single AWS
 # account.
@@ -147,8 +157,8 @@ resource "aws_kms_key" "key" {
       "Principal": {
         "AWS": [
           "${data.aws_caller_identity.current.arn}",
-          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
-          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/tfe_iam_role-${random_id.installation-id.hex}"
+          "arn:${var.arn_partition}:iam::${data.aws_caller_identity.current.account_id}:root",
+          "arn:${var.arn_partition}:iam::${data.aws_caller_identity.current.account_id}:role/tfe_iam_role-${random_id.installation-id.hex}"
         ]
       },
       "Action": "kms:*",
@@ -194,6 +204,8 @@ module "instance" {
   kms_key_id           = "${coalesce(var.kms_key_id, join("", aws_kms_key.key.*.arn))}"
   bucket_force_destroy = "${var.bucket_force_destroy}"
   manage_bucket        = "${var.manage_bucket}"
+  arn_partition        = "${var.arn_partition}"
+  internal_elb         = "${var.internal_elb}"
 }
 
 module "db" {

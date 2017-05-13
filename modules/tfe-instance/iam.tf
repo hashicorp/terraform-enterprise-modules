@@ -41,8 +41,8 @@ data "aws_iam_policy_document" "tfe-perms" {
     effect = "Allow"
 
     resources = [
-      "arn:aws:s3:::${var.bucket_name}",
-      "arn:aws:s3:::${var.bucket_name}/*",
+      "arn:${var.arn_partition}:s3:::${var.bucket_name}",
+      "arn:${var.arn_partition}:s3:::${var.bucket_name}/*",
     ]
 
     actions = [
@@ -54,7 +54,7 @@ data "aws_iam_policy_document" "tfe-perms" {
     sid    = "AllowCloudwatch"
     effect = "Allow"
 
-    resources = ["arn:aws:logs:*:log-group:${var.hostname}*"]
+    resources = ["arn:${var.arn_partition}:logs:*:log-group:${var.hostname}*"]
 
     actions = [
       "logs:PutLogEvents",

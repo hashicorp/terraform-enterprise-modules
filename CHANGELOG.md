@@ -13,20 +13,34 @@ Where:
 
 ## vNext (Unreleased)
 
+## v201705-1 (May 12, 2017)
+
 APPLICATION LEVEL CHANGES:
 
-(none)
+ * Improve UI performance by reducing how often and when pages poll for new
+   results.
+ * Add support for releases up to Terraform 0.9.4.
+ * Add support for releases up to Packer 0.12.3.
+ * Fix the From address in email sent by the system.
+ * Allow amazon-ebssurrogate builder in Packer.
+ * Handle sensitive variables from `packer push`.
+ * Improve speed of retrieving and uploading artifacts over HTTP.
+ * Added integrations with GitLab and BitBucket Cloud.
+ * Removed Consul and Applications functionality.
 
 MACHINE IMAGE CHANGES:
 
  * Fix an issue preventing the `hashicorp-support` command from successfully
    generating a diagnostic bundle.
+ * Fix ability to handle more complex database paswords.
+ * More explicit region utilization in S3 access to support S3 in Govcloud.
 
 TERRAFORM CONFIG CHANGES:
 
  * Make `region` a required input variable to prevent any confusion from the
    default value being set to an unexpected value. Customers who were not
    already setting this can populate it with the former default: `"us-west-2"`
+ * Add ability to specify the aws partition to support govcloud.
  * Reorganize supportive modules into a separate `aws-extra` directory
  * Remove a stale output being referenced in `vpc-base`
  * Work around a Terraform bug that prevented the outputs of `vpc-base` from
@@ -34,6 +48,11 @@ TERRAFORM CONFIG CHANGES:
  * Explicitly specify the IAM policy of the KMS key when creating it.
  * Add an Alias to the created KMS key so it is more easily identifiable AWS
    console.
+ * Add ability to start the ELB in internal mode.
+ * Specify KMS key policy to allow for utilization of the key explicitly by
+   the TFE instance role.
+ * Add KMS alias for key that is utilized for better inventory tracking.
+
 
 ## v201704-3
 
