@@ -9,4 +9,4 @@ releases.
  * [`logs`](logs.md) - Information about working with TFE logs
  * [`storing-tfe-state`](storing-tfe-state.md) - Recommendations on how to manage the Terraform State of the Terraform Enterprise install process
  * [`tfe-architecture`](tfe-architecture.md) - Information on TFE's architecture
- 
+ * [`support`](support.md) - Getting help when things are not working as expected

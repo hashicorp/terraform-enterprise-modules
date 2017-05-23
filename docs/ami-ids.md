@@ -23,3 +23,6 @@ See also the [CHANGELOG](../CHANGELOG.md).
 | **[v201705-1](../CHANGELOG.md#v201705-1)** | us-west-2     | `ami-966105f6` |
 |                                            | us-east-1     | `ami-38d2a22e` |
 |                                            | us-gov-west-1 | `ami-c120a4a0` |
+| **[v201705-2](../CHANGELOG.md#v201705-2)** | us-west-2     | `ami-4d70102d` |
+|                                            | us-east-1     | `ami-518ecf47` |
+|                                            | us-gov-west-1 | `ami-48fb7c29` |

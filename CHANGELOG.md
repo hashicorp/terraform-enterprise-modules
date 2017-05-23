@@ -13,6 +13,36 @@ Where:
 
 ## vNext (Unreleased)
 
+## v201705-2 (May 23, 2017)
+
+APPLICATION LEVEL CHANGES:
+
+  * Prevent sensitive variables from being sent in the clear over the API.
+  * Improve setup UI.
+  * Add support for releases up to Terraform 0.9.5.
+  * Fix bug that prevented packer runs from having their logs automatically
+    display.
+
+MACHINE IMAGE CHANGES:
+
+  * Fix archivist being misreported as failing checks.
+  * Add ability to add SSL certificates to be trusted into /etc/ssl/certs.
+  * Add awscli to build context for use with local\_exec.
+  * Infer the s3 endpoint from the region to support different AWS partitions.
+  * Add ability to run custom shell code on the first boot.
+
+TERRAFORM CONFIG CHANGES:
+
+  * Add `startup_script` to allow custom shell code to be injected and run on
+    first boot.
+  * Allow for customer managed security groups.
+
+
+DOCUMENTATION CHANGES:
+
+  * Include [documentation](docs/support.md) on sending support information via the
+    `hashicorp-support` tool.
+
 ## v201705-1 (May 12, 2017)
 
 APPLICATION LEVEL CHANGES:

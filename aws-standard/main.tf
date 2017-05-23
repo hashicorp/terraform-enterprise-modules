@@ -118,6 +118,21 @@ variable "internal_elb" {
   default     = false
 }
 
+variable "startup_script" {
+  description = "Shell or other cloud-init compatible code to run on startup"
+  default     = ""
+}
+
+variable "external_security_group_id" {
+  description = "The ID of an existing security group to use for the ELB instead of creating one."
+  default     = ""
+}
+
+variable "internal_security_group_id" {
+  description = "The ID of an existing security group to use for the instance instead of creating one."
+  default     = ""
+}
+
 # A random identifier to use as a suffix on resource names to prevent
 # collisions when multiple instances of TFE are installed in a single AWS
 # account.
@@ -183,29 +198,32 @@ module "route53" {
 }
 
 module "instance" {
-  source               = "../modules/tfe-instance"
-  installation_id      = "${random_id.installation-id.hex}"
-  ami_id               = "${var.ami_id}"
-  instance_type        = "${var.instance_type}"
-  hostname             = "${var.fqdn}"
-  vpc_id               = "${data.aws_subnet.instance.vpc_id}"
-  cert_id              = "${var.cert_id}"
-  instance_subnet_id   = "${var.instance_subnet_id}"
-  elb_subnet_id        = "${var.elb_subnet_id}"
-  key_name             = "${var.key_name}"
-  db_username          = "${var.db_username}"
-  db_password          = "${var.db_password}"
-  db_endpoint          = "${module.db.endpoint}"
-  db_database          = "${module.db.database}"
-  redis_host           = "${module.redis.host}"
-  redis_port           = "${module.redis.port}"
-  bucket_name          = "${var.bucket_name}"
-  bucket_region        = "${var.region}"
-  kms_key_id           = "${coalesce(var.kms_key_id, join("", aws_kms_key.key.*.arn))}"
-  bucket_force_destroy = "${var.bucket_force_destroy}"
-  manage_bucket        = "${var.manage_bucket}"
-  arn_partition        = "${var.arn_partition}"
-  internal_elb         = "${var.internal_elb}"
+  source                     = "../modules/tfe-instance"
+  installation_id            = "${random_id.installation-id.hex}"
+  ami_id                     = "${var.ami_id}"
+  instance_type              = "${var.instance_type}"
+  hostname                   = "${var.fqdn}"
+  vpc_id                     = "${data.aws_subnet.instance.vpc_id}"
+  cert_id                    = "${var.cert_id}"
+  instance_subnet_id         = "${var.instance_subnet_id}"
+  elb_subnet_id              = "${var.elb_subnet_id}"
+  key_name                   = "${var.key_name}"
+  db_username                = "${var.db_username}"
+  db_password                = "${var.db_password}"
+  db_endpoint                = "${module.db.endpoint}"
+  db_database                = "${module.db.database}"
+  redis_host                 = "${module.redis.host}"
+  redis_port                 = "${module.redis.port}"
+  bucket_name                = "${var.bucket_name}"
+  bucket_region              = "${var.region}"
+  kms_key_id                 = "${coalesce(var.kms_key_id, join("", aws_kms_key.key.*.arn))}"
+  bucket_force_destroy       = "${var.bucket_force_destroy}"
+  manage_bucket              = "${var.manage_bucket}"
+  arn_partition              = "${var.arn_partition}"
+  internal_elb               = "${var.internal_elb}"
+  startup_script             = "${var.startup_script}"
+  external_security_group_id = "${var.external_security_group_id}"
+  internal_security_group_id = "${var.internal_security_group_id}"
 }
 
 module "db" {

@@ -24,3 +24,6 @@
 # manage_bucket =
 # zone_id =
 # hostname =
+# arn_partition =
+# internal_elb =
+# startup_script =

@@ -52,8 +52,8 @@ The following variables are required inputs and must be populated prior to begin
 
 These variables can be populated, but they have defaults that can also be used.
 
-* `manage_bucket`: Indicate if this terraform state should create and own the bucket. Set this to false if you are reusing an existing bucket.
-* `kms_key_id`: Specify the ARN for a KMS key to use rather than having one
+* `manage_bucket` Indicate if this terraform state should create and own the bucket. Set this to false if you are reusing an existing bucket.
+* `kms_key_id` Specify the ARN for a KMS key to use rather than having one
   created automatically.
 * `db_username` Username that will be used to access RDS. Default: `atlas`
 * `db_size_gb` Disk size of the RDS instance to create. Default: `80`
@@ -63,6 +63,43 @@ These variables can be populated, but they have defaults that can also be used.
 * `db_name` This only needs to be set if you're migrating from an RDS instance with a different database name.
 * `zone_id` The id of a Route53 zone that a record for the cluster will be installed into. Leave this blank if you need to manage DNS elsewhere. Example: `ZVEF52R7NLTW6`
 * `hostname` If specifying `zone_id`, this should be set to the name that is used for the record to be registered with the zone. This value combined with the zone information will form the full DNS name for TFE. Example: `emp-test`
+* `arn_partition` Used mostly for govcloud installations. Example: `aws-us-gov`
+* `internal_elb` Indicate to AWS that the created ELB is internal only. Example: `true`
+* `startup_script` Shell code that should run on the first boot.
+* `external_security_group_id` The ID of a custom EC2 Security Group to assign to the ELB for "external" access to the system. By default, a Security Group will be created that allows ingress port 80 and 443 to `0.0.0.0/0`.
+* `internal_security_group_id` The ID of a custom EC2 Security Group to assign to the instance for "internal" access to the system. By default, a Security group will be created that allos ingress port 22 and 8080 from `0.0.0.0/0`.
+
+#### Startup Script
+
+The `startup_script` variable can contain any shell code and
+will be executed on the first boot. This mechanism can be used to custom the AMI,
+adding additional software or configuration.
+
+For example, to install a custom SSL certificate for the services to trust:
+
+```
+curl -O /etc/ssl/certs/custom.pem https://my.server.net/custom.pem
+cd /etc/ssl/certs && c_rehash .
+```
+
+Or to install additional Ubuntu packages:
+
+```
+apt-get install -y emacs
+```
+
+Because the content is likely to be multiple lines, we suggest you use the
+heredoc style syntax to define the variable. For example, in your
+`terraform.tfvars` file, you'd have:
+
+```
+startup_script = <<SHELL
+
+apt-get install -y nano
+adduser my-admin
+
+SHELL
+```
 
 ### Populating Variables
 
@@ -88,3 +125,8 @@ To upgrade your instance of Terraform Enterprise, simply update the repository c
 * `zone_id` - The Route53 Zone ID of the load balancer for TFE. If you are
    managing DNS separately but still using Route53, this value may be useful.
 * `url` - The URL where TFE will become available when it boots.
+
+## Configuration
+
+After completing a new install you should head to the
+[configuration page](../docs/configuring.md) to create users and teams.

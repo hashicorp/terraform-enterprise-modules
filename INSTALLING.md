@@ -9,12 +9,12 @@ Terraform Enterprise currently targets Amazon Web Services environments. Support
 In AWS, a Terraform Enterprise install consists of:
 
  * Compute Tier
-  * Elastic Load Balancer (ELB)
-  * Single EC2 instance launched as part of an AutoScaling Group (ASG)
+   * Elastic Load Balancer (ELB)
+   * Single EC2 instance launched as part of an AutoScaling Group (ASG)
  * Data Tier
-  * RDS PostgreSQL for primary application storage
-  * ElastiCache Redis for ephemeral application storage
-  * An S3 Bucket for object storage
+   * RDS PostgreSQL for primary application storage
+   * ElastiCache Redis for ephemeral application storage
+   * An S3 Bucket for object storage
 
 ### Primary Installation Config Files
 

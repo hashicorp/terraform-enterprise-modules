@@ -41,8 +41,24 @@ variable "internal_elb" {
   default = false
 }
 
+variable "startup_script" {
+  description = "Shell or other cloud-init compatible code to run on startup"
+  default     = ""
+}
+
+variable "external_security_group_id" {
+  description = "The ID of an existing security group to use for the ELB instead of creating one."
+  default = ""
+}
+
+variable "internal_security_group_id" {
+  description = "The ID of an existing security group to use for the instance instead of creating one."
+  default = ""
+}
+
 resource "aws_security_group" "ptfe" {
   vpc_id = "${var.vpc_id}"
+  count  = "${var.internal_security_group_id != "" ? 0 : 1}"
 
   ingress {
     from_port   = 22
@@ -80,6 +96,7 @@ resource "aws_security_group" "ptfe" {
 }
 
 resource "aws_security_group" "ptfe-external" {
+  count  = "${var.external_security_group_id != "" ? 0 : 1}"
   vpc_id = "${var.vpc_id}"
 
   ingress {
@@ -121,7 +138,7 @@ resource "aws_launch_configuration" "ptfe" {
   image_id             = "${var.ami_id}"
   instance_type        = "${var.instance_type}"
   key_name             = "${var.key_name}"
-  security_groups      = ["${aws_security_group.ptfe.id}"]
+  security_groups      = ["${coalesce(var.internal_security_group_id, join("", aws_security_group.ptfe.*.id))}"]
   iam_instance_profile = "${aws_iam_instance_profile.tfe_instance.name}"
 
   root_block_device {
@@ -136,6 +153,8 @@ mkdir -p /etc/atlas
 aws configure set s3.signature_version s3v4
 aws configure set default.region ${var.bucket_region}
 aws s3 cp s3://${aws_s3_bucket_object.setup.bucket}/${aws_s3_bucket_object.setup.key} /etc/atlas/boot.env
+
+${var.startup_script}
   BASH
 }
 
@@ -199,7 +218,7 @@ KMS_KEY_ID="${var.kms_key_id}"
 resource "aws_elb" "ptfe" {
   internal        = "${var.internal_elb}"
   subnets         = ["${var.elb_subnet_id}"]
-  security_groups = ["${aws_security_group.ptfe-external.id}"]
+  security_groups = ["${coalesce(var.external_security_group_id, join("", aws_security_group.ptfe-external.*.id))}"]
 
   listener {
     instance_port      = 8080
