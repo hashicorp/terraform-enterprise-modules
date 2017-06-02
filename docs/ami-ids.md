@@ -8,6 +8,9 @@ Terraform Enterprise.
 
 See also the [CHANGELOG](../CHANGELOG.md).
 
+If you wish to use an AMI with encrypted EBS snapshots, you'll need to make
+a private copy. We have documented that procedure in [Encrypted AMI](encrypt-ami.md).
+
 | TFE Release                                | Region        | AMI ID         |
 | ------------------------------------------ | ------------- | -------------- |
 | **[v201703-1](../CHANGELOG.md#v201703-1)** | us-west-2     | `ami-4844d128` |
@@ -26,3 +29,7 @@ See also the [CHANGELOG](../CHANGELOG.md).
 | **[v201705-2](../CHANGELOG.md#v201705-2)** | us-west-2     | `ami-4d70102d` |
 |                                            | us-east-1     | `ami-518ecf47` |
 |                                            | us-gov-west-1 | `ami-48fb7c29` |
+| **[v201706-1](../CHANGELOG.md#v201706-1)** | us-west-2     | `ami-f00d6190` |
+|                                            | us-east-1     | `ami-46530450` |
+|                                            | us-gov-west-1 | `ami-5151d630` |
+|                                            | eu-west-1     | `ami-14c3d372` |

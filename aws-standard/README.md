@@ -68,6 +68,7 @@ These variables can be populated, but they have defaults that can also be used.
 * `startup_script` Shell code that should run on the first boot.
 * `external_security_group_id` The ID of a custom EC2 Security Group to assign to the ELB for "external" access to the system. By default, a Security Group will be created that allows ingress port 80 and 443 to `0.0.0.0/0`.
 * `internal_security_group_id` The ID of a custom EC2 Security Group to assign to the instance for "internal" access to the system. By default, a Security group will be created that allos ingress port 22 and 8080 from `0.0.0.0/0`.
+* `proxy_url` A url (http or https, with port) to proxy all external http/https request from the cluster to.
 
 #### Startup Script
 
@@ -100,6 +101,16 @@ adduser my-admin
 
 SHELL
 ```
+
+#### Proxy Support
+
+The cluster can be configured to send all outbound HTTP and HTTPS traffic
+through a proxy. By setting the `proxy_url` to either an http:// or https:// url,
+all systems that make HTTP and HTTPS request will connect to the proxy to
+perform the request.
+
+*NOTE* This is only for outbound HTTP and HTTPS requests. Other traffic such
+as SMTP and NTP are not proxied and will attempt to connect directly.
 
 ### Populating Variables
 

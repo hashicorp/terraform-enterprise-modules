@@ -13,6 +13,48 @@ Where:
 
 ## vNext (Unreleased)
 
+## v201706-1 (June 1, 2017)
+
+APPLICATION LEVEL FEATURES:
+
+  * Improve page load times.
+  * Add support for releases up to Terraform 0.9.6.
+  * Make Terraform the default page after logging in.
+
+APPLICATION LEVEL BUG FIXES:
+
+  * Bitbucket Cloud stability improvements.
+  * GitLab stability improvements.
+  * Address a regression for Terraform Runs using Terraform 0.9.x that
+    caused Plans run on non-default branches (e.g. from Pull Requests)
+    to push state and possibly conflict with default branch Terraform Runs.
+  * Ignore any state included by a `terraform push` and always use state
+    within Terraform Enterprise.
+  * Prevent `terraform init` from accidentially asking for any input.
+  * Allow sensitive variable to be updated.
+  * Fix "Settings" link in some cases.
+
+MACHINE IMAGE FEATURES:
+
+  * Automatically scale the number of total concurrent builds up based on
+    the amount of memory available in the instance.
+  * Add ability to configure instance to send all outbound HTTP and HTTPS
+    traffic through a user defined proxy server.
+
+TERRAFORM CONFIG FEATURES:
+
+  * Add `proxy_url` variable to configure outbound HTTP/HTTPS proxy.
+
+DOCUMENTATION CHANGES:
+
+  * Remove deprecated references to Consul environments.
+  * Include [Encrypted AMI](docs/encrypt-ami.md) for information on using
+    encrypted AMIs/EBS.
+  * Add [`network-access`](docs/network-access.md) with information about
+    the network access required by TFE.
+  * Add [`managing-tool-versions`](docs/managing-tool-versions.md) to document
+    usage of the `/admin/tools` control panel.
+
 ## v201705-2 (May 23, 2017)
 
 APPLICATION LEVEL CHANGES:

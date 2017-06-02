@@ -48,11 +48,15 @@ variable "startup_script" {
 
 variable "external_security_group_id" {
   description = "The ID of an existing security group to use for the ELB instead of creating one."
-  default = ""
+  default     = ""
 }
 
 variable "internal_security_group_id" {
   description = "The ID of an existing security group to use for the instance instead of creating one."
+  default     = ""
+}
+
+variable "proxy_url" {
   default = ""
 }
 
@@ -212,6 +216,7 @@ TFE_HOSTNAME="${var.hostname}"
 BUCKET_URL="${var.bucket_name}"
 BUCKET_REGION="${var.bucket_region}"
 KMS_KEY_ID="${var.kms_key_id}"
+PROXY_URL="${var.proxy_url}"
     BASH
 }
 

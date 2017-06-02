@@ -133,6 +133,11 @@ variable "internal_security_group_id" {
   default     = ""
 }
 
+variable "proxy_url" {
+  description = "A url (http or https, with port) to proxy all external http/https request from the cluster to."
+  default     = ""
+}
+
 # A random identifier to use as a suffix on resource names to prevent
 # collisions when multiple instances of TFE are installed in a single AWS
 # account.
@@ -224,6 +229,7 @@ module "instance" {
   startup_script             = "${var.startup_script}"
   external_security_group_id = "${var.external_security_group_id}"
   internal_security_group_id = "${var.internal_security_group_id}"
+  proxy_url                  = "${var.proxy_url}"
 }
 
 module "db" {
