@@ -13,6 +13,18 @@ Where:
 
 ## vNext (Unreleased)
 
+## v201706-2 (June 5, 2017)
+
+APPLICATION LEVEL BUG FIXES:
+
+  * Clear all caches on boot to prevent old records from being used.
+
+MACHINE IMAGE FEATURES:
+
+  * Added `clear-cache` to clear all caches used by the cluster.
+  * Added `rails-console` to provide swift access to the Ruby on Rails
+    console, used for lowlevel application debugging and inspection.
+
 ## v201706-1 (June 1, 2017)
 
 APPLICATION LEVEL FEATURES:
