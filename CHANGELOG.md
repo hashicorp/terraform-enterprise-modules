@@ -13,6 +13,12 @@ Where:
 
 ## vNext (Unreleased)
 
+## v201706-3 (June 7, 2017)
+
+MACHINE IMAGE BUG FIXES:
+
+  * Exclude all cluster local traffic from using the outbound proxy.
+
 ## v201706-2 (June 5, 2017)
 
 APPLICATION LEVEL BUG FIXES:

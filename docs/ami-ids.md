@@ -37,3 +37,7 @@ a private copy. We have documented that procedure in [Encrypted AMI](encrypt-ami
 |                                            | us-east-1     | `ami-cef6a6d8` |
 |                                            | us-gov-west-1 | `ami-176ceb76` |
 |                                            | eu-west-1     | `ami-c4e0f3a2` |
+| **[v201706-3](../CHANGELOG.md#v201706-3)** | us-west-2     | `ami-4a010f33` |
+|                                            | us-east-1     | `ami-27623d31` |
+|                                            | us-gov-west-1 | `ami-13028572` |
+|                                            | eu-west-1     | `ami-0869746e` |
