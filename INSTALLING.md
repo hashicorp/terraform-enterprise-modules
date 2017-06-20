@@ -22,7 +22,7 @@ The [`aws-standard`](aws-standard/) directory contains the primary Terraform Ent
 
 ### Tertiary Terraform Configs
 
-The [`aws-extra`](aws-extra/) directory contains supplamentary configs. Its [`README`](aws-extra/README.md) contains a list of descriptions of the configs available.
+The [`aws-extra`](aws-extra/) directory contains supplementary configs. Its [`README`](aws-extra/README.md) contains a list of descriptions of the configs available.
 
 ## Documentation
 
