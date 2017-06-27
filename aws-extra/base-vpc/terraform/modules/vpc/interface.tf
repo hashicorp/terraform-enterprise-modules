@@ -23,6 +23,11 @@ variable "availability_zones" {
   type        = "list"
 }
 
+variable "region" {
+  description = "The AWS region where the VPC will be created"
+  type        = "string"
+}
+
 output "private_subnets" {
   value = ["${aws_subnet.private.*.id}"]
 }

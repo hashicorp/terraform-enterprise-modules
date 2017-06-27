@@ -13,6 +13,34 @@ Where:
 
 ## vNext (Unreleased)
 
+## v201706-4 (June 26, 2017)
+
+APPLICATION LEVEL FEATURES:
+
+  * Add support for releases up to Terraform 0.9.8.
+
+APPLICATION LEVEL BUG FIXES:
+
+  * VCS: Send commit status updates after every `terraform plan` that has a
+    commit.
+  * Fix admin page that displays Terraform Runs.
+  * Remove application identifying HTTP headers.
+
+MACHINE IMAGE BUG FIXES:
+
+  * Fix `rails-console` to be more usable and provide a command prompt.
+  * Fix DNS servers exposed to builds to use DNS servers that are configured
+    for the instance.
+  * Redact sensitive information from error output generated while talking to
+    VCS providers.
+  * Refresh tokens for Bitbucket and GitLab properly.
+  * Update build status on Bitbucket Cloud PRs.
+
+EXTRAS CHANGES:
+
+  * Parametirez s3 endpoint region used for setup of S3 <=> VPC peering.
+
+
 ## v201706-3 (June 7, 2017)
 
 MACHINE IMAGE BUG FIXES:

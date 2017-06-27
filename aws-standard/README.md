@@ -79,9 +79,11 @@ adding additional software or configuration.
 For example, to install a custom SSL certificate for the services to trust:
 
 ```
-curl -O /etc/ssl/certs/custom.pem https://my.server.net/custom.pem
-cd /etc/ssl/certs && c_rehash .
+curl -o /usr/local/share/ca-certificates/cert.crt https://my.server.net/custom.pem
+update-ca-certificates
 ```
+
+Be sure that files in `/usr/local/share/ca-certificates` end in `.crt` and that `update-ca-certificates` is run after they're placed.
 
 Or to install additional Ubuntu packages:
 
