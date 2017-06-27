@@ -32,6 +32,8 @@ module "vpc" {
   ]
 
   availability_zones = ["${data.aws_availability_zones.zones.names}"]
+
+  region = "${var.region}"
 }
 
 output "private_subnet_ids" {
