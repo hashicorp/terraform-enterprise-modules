@@ -29,7 +29,7 @@ variable "elb_subnet_id" {
 }
 
 variable "data_subnet_ids" {
-  description = "Subnets to place the data services (RDS and redis) into (2 required for availability)"
+  description = "Subnets to place the data services (RDS) into (2 required for availability)"
   type        = "list"
 }
 
@@ -55,12 +55,32 @@ variable "db_username" {
   default     = "atlas"
 }
 
+variable "local_db" {
+  description = "Use the database on the instance (alpha feature)"
+  default     = false
+}
+
+variable "local_redis" {
+  description = "Use redis on the instance"
+  default     = false
+}
+
 variable "region" {
   description = "AWS region to place cluster into"
 }
 
 variable "ami_id" {
   description = "The AMI of a Terraform Enterprise Base image"
+}
+
+variable "ebs_size" {
+  default     = 100
+  description = "Size of the EBS volume"
+}
+
+variable "ebs_redundancy" {
+  description = "Number of redundent EBS volumes to configure"
+  default     = 2
 }
 
 variable "instance_type" {
@@ -213,12 +233,12 @@ module "instance" {
   instance_subnet_id         = "${var.instance_subnet_id}"
   elb_subnet_id              = "${var.elb_subnet_id}"
   key_name                   = "${var.key_name}"
-  db_username                = "${var.db_username}"
-  db_password                = "${var.db_password}"
-  db_endpoint                = "${module.db.endpoint}"
-  db_database                = "${module.db.database}"
-  redis_host                 = "${module.redis.host}"
-  redis_port                 = "${module.redis.port}"
+  db_username                = "${var.local_db ? "atlasuser" : var.db_username}"
+  db_password                = "${var.local_db ? "databasepassword" : var.db_password}"
+  db_endpoint                = "${var.local_db ? "127.0.0.1:5432" : module.db.endpoint}"
+  db_database                = "${var.local_db ? "atlas_production" : module.db.database}"
+  redis_host                 = "${var.local_redis ? "127.0.0.1" : module.redis.host}"
+  redis_port                 = "${var.local_redis ? "6379" : module.redis.port}"
   bucket_name                = "${var.bucket_name}"
   bucket_region              = "${var.region}"
   kms_key_id                 = "${coalesce(var.kms_key_id, join("", aws_kms_key.key.*.arn))}"
@@ -226,6 +246,7 @@ module "instance" {
   manage_bucket              = "${var.manage_bucket}"
   arn_partition              = "${var.arn_partition}"
   internal_elb               = "${var.internal_elb}"
+  ebs_redundancy             = "${(var.local_redis || var.local_db) ? var.ebs_redundancy : 0}"
   startup_script             = "${var.startup_script}"
   external_security_group_id = "${var.external_security_group_id}"
   internal_security_group_id = "${var.internal_security_group_id}"
@@ -234,6 +255,7 @@ module "instance" {
 
 module "db" {
   source                  = "../modules/rds"
+  disable                 = "${var.local_db}"
   instance_class          = "${var.db_instance_class}"
   multi_az                = "${var.db_multi_az}"
   name                    = "tfe-${random_id.installation-id.hex}"
@@ -253,6 +275,7 @@ module "db" {
 
 module "redis" {
   source        = "../modules/redis"
+  disable       = "${var.local_redis}"
   name          = "tfe-${random_id.installation-id.hex}"
   subnet_ids    = "${var.data_subnet_ids}"
   vpc_cidr      = "0.0.0.0/0"
@@ -274,4 +297,8 @@ output "dns_name" {
 
 output "zone_id" {
   value = "${module.instance.zone_id}"
+}
+
+output "iam_role" {
+  value = "${module.instance.iam_role}"
 }

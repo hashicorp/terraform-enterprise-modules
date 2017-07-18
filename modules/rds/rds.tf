@@ -30,20 +30,27 @@ variable "snapshot_identifier" {
   default = ""
 }
 
+variable "disable" {
+  default = false
+}
+
 variable "db_name" {
   default = "atlas_production"
 }
 
 resource "aws_db_subnet_group" "rds" {
+  count       = "${var.disable ? 0 : 1}"
   name        = "${var.name}"
   description = "${var.name}"
+
   # In order for this module to work properly with the aws-extra/base-vpc
   # module, subnet_ids needs to be wrapped in square brackets even though the
   # variable is declared as a list until https://github.com/hashicorp/terraform/issues/13103 is resolved.
-  subnet_ids  = ["${var.subnet_ids}"]
+  subnet_ids = ["${var.subnet_ids}"]
 }
 
 resource "aws_security_group" "rds" {
+  count  = "${var.disable ? 0 : 1}"
   name   = "${var.name}"
   vpc_id = "${var.vpc_id}"
 
@@ -63,6 +70,7 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_db_instance" "rds" {
+  count                     = "${var.disable ? 0 : 1}"
   identifier                = "${var.name}"
   engine                    = "postgres"
   engine_version            = "${var.version}"
@@ -99,11 +107,11 @@ resource "aws_db_instance" "rds" {
 }
 
 output "database" {
-  value = "${aws_db_instance.rds.name}"
+  value = "${join("", aws_db_instance.rds.*.name)}"
 }
 
 output "endpoint" {
-  value = "${aws_db_instance.rds.endpoint}"
+  value = "${join("", aws_db_instance.rds.*.endpoint)}"
 }
 
 output "username" {

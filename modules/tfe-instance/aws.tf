@@ -32,6 +32,16 @@ variable "redis_port" {}
 
 variable "kms_key_id" {}
 
+variable "ebs_size" {
+  description = "Size (in GB) of the EBS volumes"
+  default     = 100
+}
+
+variable "ebs_redundancy" {
+  description = "Number of redundent EBS volumes to configure"
+  default     = 2
+}
+
 variable "arn_partition" {
   description = "AWS partition to use (used mostly by govcloud)"
   default     = "aws"
@@ -138,6 +148,25 @@ resource "aws_security_group" "ptfe-external" {
   }
 }
 
+data "aws_subnet" "subnet" {
+  id = "${var.instance_subnet_id}"
+}
+
+resource "aws_ebs_volume" "data" {
+  count             = "${var.ebs_redundancy}"
+  availability_zone = "${data.aws_subnet.subnet.availability_zone}"
+  size              = "${var.ebs_size}"
+  type              = "gp2"
+
+  tags {
+    Name = "terraform-enterprise-${var.hostname}"
+  }
+
+  tags {
+    InstallationId = "${var.installation_id}"
+  }
+}
+
 resource "aws_launch_configuration" "ptfe" {
   image_id             = "${var.ami_id}"
   instance_type        = "${var.instance_type}"
@@ -216,6 +245,8 @@ TFE_HOSTNAME="${var.hostname}"
 BUCKET_URL="${var.bucket_name}"
 BUCKET_REGION="${var.bucket_region}"
 KMS_KEY_ID="${var.kms_key_id}"
+INSTALL_ID="${var.installation_id}"
+DATA_REDUNDANCY="${var.ebs_redundancy}"
 PROXY_URL="${var.proxy_url}"
     BASH
 }

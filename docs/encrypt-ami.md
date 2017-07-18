@@ -14,5 +14,5 @@ Then in the copy configuration, select Encryption:
 ![Select Encryption](assets/encrypt-ebs.png)
 
 And click *Copy AMI*. Once the copy operation is finished, you can use the
-newely created AMI's ID in your `terraform.tfvars` file to install Terraform
+newly created AMI's ID in your `terraform.tfvars` file to install Terraform
 Enterprise.

@@ -15,7 +15,12 @@ variable "port" {
   default = "6379"
 }
 
+variable "disable" {
+  default = false
+}
+
 resource "aws_elasticache_parameter_group" "redis" {
+  count       = "${var.disable ? 0 : 1}"
   name        = "${var.name}"
   family      = "redis2.8"
   description = "${var.name} parameter group"
@@ -32,6 +37,7 @@ resource "aws_elasticache_parameter_group" "redis" {
 }
 
 resource "aws_security_group" "redis" {
+  count  = "${var.disable ? 0 : 1}"
   vpc_id = "${var.vpc_id}"
 
   ingress {
@@ -54,15 +60,18 @@ resource "aws_security_group" "redis" {
 }
 
 resource "aws_elasticache_subnet_group" "redis" {
+  count       = "${var.disable ? 0 : 1}"
   name        = "${var.name}"
   description = "${var.name} subnet group"
+
   # In order for this module to work properly with the aws-extra/base-vpc
   # module, subnet_ids needs to be wrapped in square brackets even though the
   # variable is declared as a list until https://github.com/hashicorp/terraform/issues/13103 is resolved.
-  subnet_ids  = ["${var.subnet_ids}"]
+  subnet_ids = ["${var.subnet_ids}"]
 }
 
 resource "aws_elasticache_cluster" "redis" {
+  count                = "${var.disable ? 0 : 1}"
   cluster_id           = "${format("%.*s", 20, var.name)}"               # 20 max chars
   engine               = "redis"
   engine_version       = "2.8.24"
@@ -75,7 +84,7 @@ resource "aws_elasticache_cluster" "redis" {
 }
 
 output "host" {
-  value = "${aws_elasticache_cluster.redis.cache_nodes.0.address}"
+  value = "${join("", aws_elasticache_cluster.redis.*.cache_nodes.0.address)}"
 }
 
 output "port" {

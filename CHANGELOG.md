@@ -11,7 +11,38 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
-## vNext (Unreleased)
+## v201707-1 (July 18, 2017)
+
+APPLICATION LEVEL FEATURES:
+
+  * Add support for releases up to Terraform 0.9.9.
+
+APPLICATINE LEVEL BUG FIXES:
+
+  * Displays an error message if the incorrect MFA code is entered to confirm a Run.
+  * Address issue with large recipient groups in new admin notification emails.
+  * Fixes a 500 error on the Events page for some older accounts.
+  * Fix provider names in new environment form.
+  * Update wording in the Event Log for version control linking and unlinking.
+  * Fetch MFA credential from private registries when enabled.
+  * Fix ability to cancel Plans, Applies, and Runs
+
+MACHINE IMAGE FEATURES:
+
+  * Add ability to use local redis.
+    * This adds a new dependency on EBS to store the redis data.
+
+TERRAFORM CONFIG FEATURES:
+
+  * Add `local_redis` variable to configure cluster to use redis locally, eliminating
+    a dependency on ElasticCache.
+  * Add `ebs_size` variable to configure size of EBS volumes to create to store local
+    redis data.
+  * Add `ebs_redundancy` variable to number of EBS volumes to mirror together for
+    redundancy in storing redis data.
+  * Add `iam_role` as an output to allow for additional changes to be applied to
+    the IAM role used by the cluster instance.
+
 
 ## v201706-4 (June 26, 2017)
 
