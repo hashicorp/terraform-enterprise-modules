@@ -49,3 +49,7 @@ a private copy. We have documented that procedure in [Encrypted AMI](encrypt-ami
 |                                            | us-east-1     | `ami-adc7d0bb` |
 |                                            | us-gov-west-1 | `ami-37870656` |
 |                                            | eu-west-1     | `ami-16836c6f` |
+| **[v201707-2](../CHANGELOG.md#v201707-2)** | us-west-2     | `ami-830218fa` |
+|                                            | us-east-1     | `ami-dbda85a0` |
+|                                            | us-gov-west-1 | `ami-e764e586` |
+|                                            | eu-west-1     | `ami-53d3382a` |

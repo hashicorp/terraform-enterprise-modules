@@ -11,13 +11,19 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
+## v201707-2 (July 26, 2017)
+
+APPLICATION LEVEL BUG FIXES:
+
+  * Send commit status updates to VCS providers while waiting for MFA input
+
 ## v201707-1 (July 18, 2017)
 
 APPLICATION LEVEL FEATURES:
 
   * Add support for releases up to Terraform 0.9.9.
 
-APPLICATINE LEVEL BUG FIXES:
+APPLICATION LEVEL BUG FIXES:
 
   * Displays an error message if the incorrect MFA code is entered to confirm a Run.
   * Address issue with large recipient groups in new admin notification emails.
