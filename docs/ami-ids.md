@@ -46,9 +46,9 @@ a private copy. We have documented that procedure in [Encrypted AMI](encrypt-ami
 |                                            | us-gov-west-1 | `ami-d0ab2db1` |
 |                                            | eu-west-1     | `ami-b72ecbce` |
 | **[v201707-1](../CHANGELOG.md#v201707-1)** | us-west-2     | `ami-e8d7c991` |
-|                                            | us-east-1     | `ami-adc7d0bb` |
+|                                            | us-east-1     | `ami-91dc83ea` |
 |                                            | us-gov-west-1 | `ami-37870656` |
-|                                            | eu-west-1     | `ami-16836c6f` |
+|                                            | eu-west-1     | `ami-90d833e9` |
 | **[v201707-2](../CHANGELOG.md#v201707-2)** | us-west-2     | `ami-830218fa` |
 |                                            | us-east-1     | `ami-dbda85a0` |
 |                                            | us-gov-west-1 | `ami-e764e586` |
