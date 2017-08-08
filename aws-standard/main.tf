@@ -92,6 +92,10 @@ data "aws_subnet" "instance" {
   id = "${var.instance_subnet_id}"
 }
 
+data "aws_vpc" "vpc" {
+  id = "${data.aws_subnet.instance.vpc_id}"
+}
+
 variable "db_size_gb" {
   description = "Disk size of the RDS instance to create"
   default     = "80"
@@ -264,7 +268,7 @@ module "db" {
   storage_gbs             = "${var.db_size_gb}"
   subnet_ids              = "${var.data_subnet_ids}"
   version                 = "9.4.7"
-  vpc_cidr                = "0.0.0.0/0"
+  vpc_cidr                = "${data.aws_vpc.vpc.cidr_block}"
   vpc_id                  = "${data.aws_subnet.instance.vpc_id}"
   backup_retention_period = "31"
   storage_type            = "gp2"
@@ -278,7 +282,7 @@ module "redis" {
   disable       = "${var.local_redis}"
   name          = "tfe-${random_id.installation-id.hex}"
   subnet_ids    = "${var.data_subnet_ids}"
-  vpc_cidr      = "0.0.0.0/0"
+  vpc_cidr      = "${data.aws_vpc.vpc.cidr_block}"
   vpc_id        = "${data.aws_subnet.instance.vpc_id}"
   instance_type = "cache.m3.medium"
 }

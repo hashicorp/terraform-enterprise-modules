@@ -11,6 +11,11 @@ See also the [CHANGELOG](../CHANGELOG.md).
 If you wish to use an AMI with encrypted EBS snapshots, you'll need to make
 a private copy. We have documented that procedure in [Encrypted AMI](encrypt-ami.md).
 
+### NOTE
+
+The `v201707-1` and `v201707-2` releases have issues with being used to upgrade
+from previous releases. Best to skip them entirely.
+
 | TFE Release                                | Region        | AMI ID         |
 | ------------------------------------------ | ------------- | -------------- |
 | **[v201703-1](../CHANGELOG.md#v201703-1)** | us-west-2     | `ami-4844d128` |
@@ -45,11 +50,15 @@ a private copy. We have documented that procedure in [Encrypted AMI](encrypt-ami
 |                                            | us-east-1     | `ami-dcbb8aca` |
 |                                            | us-gov-west-1 | `ami-d0ab2db1` |
 |                                            | eu-west-1     | `ami-b72ecbce` |
-| **[v201707-1](../CHANGELOG.md#v201707-1)** | us-west-2     | `ami-e8d7c991` |
+| ~~**[v201707-1](../CHANGELOG.md#v201707-1)**~~ | us-west-2     | `ami-e8d7c991` |
 |                                            | us-east-1     | `ami-91dc83ea` |
 |                                            | us-gov-west-1 | `ami-37870656` |
 |                                            | eu-west-1     | `ami-90d833e9` |
-| **[v201707-2](../CHANGELOG.md#v201707-2)** | us-west-2     | `ami-830218fa` |
+| ~~**[v201707-2](../CHANGELOG.md#v201707-2)**~~ | us-west-2     | `ami-830218fa` |
 |                                            | us-east-1     | `ami-dbda85a0` |
 |                                            | us-gov-west-1 | `ami-e764e586` |
 |                                            | eu-west-1     | `ami-53d3382a` |
+| **[v201708-1](../CHANGELOG.md#v201708-1)** | us-west-2     | `ami-0585657d` |
+|                                            | us-east-1     | `ami-42311839` |
+|                                            | us-gov-west-1 | `ami-04e16165` |
+|                                            | eu-west-1     | `ami-d7f607ae` |

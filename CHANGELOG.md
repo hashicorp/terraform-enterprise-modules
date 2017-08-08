@@ -11,6 +11,19 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
+## v201708-1 (Aug 8, 2017)
+
+APPLICATION LEVEL BUG FIXES:
+
+  * Fixes a bug where TF slugs would only get encrypted during terraform push.
+  * Fixes state parser triggering for states stored in external storage (Archivist).
+  * Fixes a bug where encryption contexts could be overwritten.
+  * Send commit status updates to the GitHub VCS provider when plan is "running" (cosmetic)
+
+MACHINE IMAGE BUG FIXES:
+
+  * Manage upgrading from v201706-4 and earlier properly.
+
 ## v201707-2 (July 26, 2017)
 
 APPLICATION LEVEL BUG FIXES:
