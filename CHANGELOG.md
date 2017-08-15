@@ -11,6 +11,13 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
+## v201708-2 (Aug 16, 2017)
+
+MACHINE IMAGE BUG FIXES:
+
+  * Correct out of memory condition with various internal services that prevent
+    proper operation.
+
 ## v201708-1 (Aug 8, 2017)
 
 APPLICATION LEVEL BUG FIXES:
