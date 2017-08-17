@@ -4,7 +4,7 @@
 
 The goal of this installation procedure is to set up a Terraform Enterprise
 cluster that is available on a DNS name that is accessed via HTTPS. This
-standard configuration package uses Terraform to create both the compute and data layer resources, and optionally uses Route53 to configure the DNS automatically,
+standard configuration package uses Terraform to create both the compute and data layer resources, and optionally uses Route53 to configure the DNS automatically.
 
 ## Preflight
 
