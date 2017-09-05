@@ -13,7 +13,6 @@ In AWS, a Terraform Enterprise install consists of:
    * Single EC2 instance launched as part of an AutoScaling Group (ASG)
  * Data Tier
    * RDS PostgreSQL for primary application storage
-   * ElastiCache Redis for ephemeral application storage
    * An S3 Bucket for object storage
 
 ### Primary Installation Config Files
