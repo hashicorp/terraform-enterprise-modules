@@ -11,6 +11,18 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
+## Upcoming
+
+MACHINE IMAGE FEATURES:
+
+  * Add ability to prompt for setup data and store it inside Vault rather than
+    store it in S3+KMS (activated via new `local_setup` Terraform option).
+
+TERRAFORM CONFIG FEATURES:
+
+  * Add `local_setup` variable to tell TFE to prompt for setup data on first
+    boot and store it within Vault rather than rely on S3+KMS for setup data.
+
 ## v201708-2 (Aug 16, 2017)
 
 MACHINE IMAGE BUG FIXES:
@@ -56,7 +68,7 @@ APPLICATION LEVEL BUG FIXES:
 MACHINE IMAGE FEATURES:
 
   * Add ability to use local redis.
-    * This adds a new dependency on EBS to store the redis data.
+  * This adds a new dependency on EBS to store the redis data.
 
 TERRAFORM CONFIG FEATURES:
 

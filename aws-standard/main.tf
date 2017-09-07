@@ -48,6 +48,7 @@ variable "manage_bucket" {
 
 variable "key_name" {
   description = "Keypair name to use when started the instances"
+  default     = ""
 }
 
 variable "db_username" {
@@ -81,6 +82,11 @@ variable "ebs_size" {
 variable "ebs_redundancy" {
   description = "Number of redundent EBS volumes to configure"
   default     = 2
+}
+
+variable "local_setup" {
+  description = "Write the setup configuration data local, not in S3"
+  default     = false
 }
 
 variable "instance_type" {
@@ -255,6 +261,7 @@ module "instance" {
   external_security_group_id = "${var.external_security_group_id}"
   internal_security_group_id = "${var.internal_security_group_id}"
   proxy_url                  = "${var.proxy_url}"
+  local_setup                = "${var.local_setup}"
 }
 
 module "db" {

@@ -32,6 +32,10 @@ variable "redis_port" {}
 
 variable "kms_key_id" {}
 
+variable "local_setup" {
+  default = false
+}
+
 variable "ebs_size" {
   description = "Size (in GB) of the EBS volumes"
   default     = 100
@@ -185,7 +189,8 @@ mkdir -p /etc/atlas
 
 aws configure set s3.signature_version s3v4
 aws configure set default.region ${var.bucket_region}
-aws s3 cp s3://${aws_s3_bucket_object.setup.bucket}/${aws_s3_bucket_object.setup.key} /etc/atlas/boot.env
+echo  "${var.bucket_name}\n${var.bucket_region}" > /etc/ptfe/s3-bucket
+${var.local_setup ? "" : "aws s3 cp s3://${join("", aws_s3_bucket_object.setup.*.bucket)}/${join("", aws_s3_bucket_object.setup.*.key)} /etc/atlas/boot.env"}
 
 ${var.startup_script}
   BASH
@@ -225,6 +230,9 @@ resource "aws_autoscaling_group" "ptfe" {
 }
 
 resource "aws_s3_bucket_object" "setup" {
+  # Only store config in S3 if configured as such
+  count = "${var.local_setup ? 0 : 1}"
+
   bucket     = "${var.bucket_name}"
   key        = "tfe-setup-data"
   kms_key_id = "${var.kms_key_id}"
@@ -233,6 +241,27 @@ resource "aws_s3_bucket_object" "setup" {
   # the object is put there. We use this because the bucket
   # might not be created by TF though, just referenced.
   depends_on = ["aws_s3_bucket.tfe_bucket"]
+
+  content = <<-BASH
+DATABASE_USER="${var.db_username}"
+DATABASE_PASSWORD="${var.db_password}"
+DATABASE_HOST="${var.db_endpoint}"
+DATABASE_DB="${var.db_database}"
+REDIS_HOST="${var.redis_host}"
+REDIS_PORT="${var.redis_port}"
+TFE_HOSTNAME="${var.hostname}"
+BUCKET_URL="${var.bucket_name}"
+BUCKET_REGION="${var.bucket_region}"
+KMS_KEY_ID="${var.kms_key_id}"
+INSTALL_ID="${var.installation_id}"
+DATA_REDUNDANCY="${var.ebs_redundancy}"
+PROXY_URL="${var.proxy_url}"
+    BASH
+}
+
+resource "local_file" "setup" {
+  count    = "${var.local_setup ? 1 : 0}"
+  filename = "${path.root}/tfe-setup-data"
 
   content = <<-BASH
 DATABASE_USER="${var.db_username}"

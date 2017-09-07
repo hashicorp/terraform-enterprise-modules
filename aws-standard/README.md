@@ -69,7 +69,8 @@ These variables can be populated, but they have defaults that can also be used.
 * `external_security_group_id` The ID of a custom EC2 Security Group to assign to the ELB for "external" access to the system. By default, a Security Group will be created that allows ingress port 80 and 443 to `0.0.0.0/0`.
 * `internal_security_group_id` The ID of a custom EC2 Security Group to assign to the instance for "internal" access to the system. By default, a Security group will be created that allos ingress port 22 and 8080 from `0.0.0.0/0`.
 * `proxy_url` A url (http or https, with port) to proxy all external http/https request from the cluster to.
-* `local_redis` If true, use redis on the cluster instance, eliminating a dependency on ElasticCache. Default: `false`
+* `local_redis` If true, use a local Redis server on the cluster instance, eliminating the need for ElasticCache. Default: `false`
+* `local_setup` If true, write the setup data to a local file called `tfe-setup-data` instead of into S3. The instance will prompt for this setup data on its first boot, after which point it will be stored in Vault. (Requires a release `v201709-1` or later to be set to true.) Default: `false`
 * `ebs_size` The size (in GB) to configure the EBS volumes used to store redis data. Default: `100`
 * `ebs_redundancy` The number of EBS volumes to mirror together for redundancy in storing redis data. Default: `2`
 
