@@ -22,6 +22,8 @@ TERRAFORM CONFIG FEATURES:
 
   * Add `local_setup` variable to tell TFE to prompt for setup data on first
     boot and store it within Vault rather than rely on S3+KMS for setup data.
+  * Make `key_name` variable optional, allowing for deployments without SSH
+    access.
 
 ## v201708-2 (Aug 16, 2017)
 

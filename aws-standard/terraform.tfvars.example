@@ -41,11 +41,12 @@
 # Name of the S3 bucket to store artifacts used by the cluster into. This bucket is automatically created.
 # Example: tfe-mycompany-data
 # bucket_name =
-#
-# Name of AWS ssh key pair that will be used. The pair must already exist, it will not be created.
-# key_name =
 
 # Optional variables
+# Name of AWS ssh key pair that will be used. The pair must already exist, it
+# will not be created. If this variable is not set, no SSH access will be
+# available to the TFE instance.
+# key_name =
 #
 # This Terraform config will create and manage the bucket named in `bucket_name`.
 # Set this to false if you are reusing an existing bucket.

@@ -47,7 +47,7 @@ variable "manage_bucket" {
 }
 
 variable "key_name" {
-  description = "Keypair name to use when started the instances"
+  description = "Keypair name to use when started the instances, leave blank for no SSH access"
   default     = ""
 }
 

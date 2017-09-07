@@ -16,7 +16,7 @@ The following are required to complete installation:
 
 * **AWS IAM credentials** capable of creating new IAM roles configuring various services. We suggest you use an admin role for this. The credentials are only used for setup, during runtime only an assumed role is used.
 * **AWS VPC** containing at least 2 subnets. These will be used to launch the cluster into. Subnets do not need to be public, but they do need an internet gateway at present.
-* **SSH Key Pair** configured with AWS EC2. This will be used to configured support access to the cluster.
+* **SSH Key Pair** configured with AWS EC2. This will be used to configure support access to the cluster. This SSH key can be optionally removed from the instance once installation is complete.
   * To create a new one: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html
 * A **Publicly Trusted TLS certificate** registered with AWS Certificate Manager. This can be one created by ACM for a hostname or the certificate can be imported into it.
   * To create a new ACM-managed cert: https://console.aws.amazon.com/acm/home#/wizard/
@@ -46,12 +46,12 @@ The following variables are required inputs and must be populated prior to begin
 * `data_subnet_ids`: Subnet ids that will be used to create the data services (RDS and ElastiCache) used by the cluster. There must be 2 subnet ids given for proper redundency. Example: `["subnet-0ce26b6b", "subnet-d0f35099"]`
 * `db_password`: Password that will be used to access RDS. Example: `databaseshavesecrets`
 * `bucket_name`: Name of the S3 bucket to store artifacts used by the cluster into. This bucket is automatically created. We suggest you name it `tfe-${hostname}-data`, as convention.
-* `key_name`: Name of AWS ssh key pair that will be used. The pair needs to already exist, it will not be created.
 
 ### Optional Variables
 
 These variables can be populated, but they have defaults that can also be used.
 
+* `key_name`: Name of AWS SSH Key Pair that will be used. The pair needs to already exist, it will not be created. If this variable is not set, no SSH access will be available to the TFE instance.
 * `manage_bucket` Indicate if this terraform state should create and own the bucket. Set this to false if you are reusing an existing bucket.
 * `kms_key_id` Specify the ARN for a KMS key to use rather than having one
   created automatically.
