@@ -11,7 +11,20 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
-## Upcoming
+## v201709-1 (Sep 13, 2017)
+
+APPLICATION LEVEL FEATURES:
+  * Sends a flag to terraform workers on all new runs to enable filesystem 
+    preservation between plan/apply.
+  * Add support for Terraform 0.10.
+
+APPLICATION LEVEL BUG FIXES:
+  * State uploads now validate lineage values.
+  * Fixes a potential race during Terraform state creation.
+  * Fixes a subtle bug when loading Terraform states which were created prior
+    to having the MD5 checksum in a database column.
+  * Gradually migrate all Terraform states out of the Postgres DB and 
+    into our storage service, Archivist.
 
 MACHINE IMAGE FEATURES:
 
