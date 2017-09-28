@@ -11,6 +11,13 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
+## v201709-2 (Sep 28, 2017)
+
+MACHINE IMAGE BUG FIXES:
+  * cloud.cfg no longer conflicts with the cloud-init package.
+  * Restoring from an older, timestamp based backup no longer hangs when
+    there are a large number of backups.
+
 ## v201709-1 (Sep 13, 2017)
 
 APPLICATION LEVEL FEATURES:
