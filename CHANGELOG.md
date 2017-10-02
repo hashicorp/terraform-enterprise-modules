@@ -11,6 +11,11 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
+## v201709-3 (Sep 29, 2017)
+
+MACHINE IMAGE BUG FIXES:
+  * Properly write the vault root key envvar file.
+
 ## v201709-2 (Sep 28, 2017)
 
 MACHINE IMAGE BUG FIXES:

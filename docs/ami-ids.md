@@ -74,3 +74,7 @@ from previous releases. Best to skip them entirely.
 |                                            | us-east-1     | `ami-69738113` |
 |                                            | us-gov-west-1 | `ami-5efd7f3f` |
 |                                            | eu-west-1     | `ami-425a913b` |
+| **[v201709-3](../CHANGELOG.md#v201709-3)** | us-west-2     | `ami-d63bc3ae` |
+|                                            | us-east-1     | `ami-dece37a4` |
+|                                            | us-gov-west-1 | `ami-ad9d1fcc` |
+|                                            | eu-west-1     | `ami-ba2ffac3` |
