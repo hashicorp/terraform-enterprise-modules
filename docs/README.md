@@ -5,6 +5,8 @@ releases.
 
 * [`about-the-ami`](about-the-ami.md) - Details about the TFE Base AMI
 * [`ami-ids`](ami-ids.md) - A list of the TFE release AMI IDs for each region
+* [`aws-extra`](../aws-extra/README.md) - Some additional configuration information meant to support deployment of Private TFE in AWS.
+* [`aws-standard`](../aws-standard/README.md) - Instructions for deploying Private TFE in AWS 
 * [`legacy`](legacy.md) - Information about upgrading from a Legacy TFE architecture
 * [`logs`](logs.md) - Information about working with TFE logs
 * [`managing-tool-versions`](managing-tool-versions.md) - Details about managing the versions and locations of Packer and Terraform used by TFE
