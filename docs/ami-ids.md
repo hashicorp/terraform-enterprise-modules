@@ -78,3 +78,7 @@ from previous releases. Best to skip them entirely.
 |                                            | us-east-1     | `ami-dece37a4` |
 |                                            | us-gov-west-1 | `ami-ad9d1fcc` |
 |                                            | eu-west-1     | `ami-ba2ffac3` |
+| **[v201711-1](../CHANGELOG.md#v201711-1)** | us-west-2     | `ami-36b8734e` |
+|                                            | us-east-1     | `ami-4cd37b36` |
+|                                            | us-gov-west-1 | `ami-0e018c6f` |
+|                                            | eu-west-1     | `ami-1164c568` |

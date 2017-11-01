@@ -11,6 +11,16 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
+## v201711-1 (Nov 1, 2017)
+
+APPLICATION LEVEL BUG FIXES:
+  * The Bitbucket Server integration no longer sends empty JSON payloads with get requests
+  * Force Canceled runs will create a run event so that they no longer appear to be planning in the UI
+
+MACHINE IMAGE BUG FIXES:
+  * Increase the capacity of the UI to prevent it being unavailable due
+    to starvation.
+
 ## v201709-3 (Sep 29, 2017)
 
 MACHINE IMAGE BUG FIXES:
