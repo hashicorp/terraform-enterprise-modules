@@ -82,3 +82,9 @@ from previous releases. Best to skip them entirely.
 |                                            | us-east-1     | `ami-4cd37b36` |
 |                                            | us-gov-west-1 | `ami-0e018c6f` |
 |                                            | eu-west-1     | `ami-1164c568` |
+| **[v201712-1](../CHANGELOG.md#v201712-1)** | us-west-1     | `ami-540a0f34` |
+|                                            | us-west-2     | `ami-a53e9bdd` |
+|                                            | us-gov-west-1 | `ami-6dbd320c` |
+|                                            | us-east-1     | `ami-8e8fedf4` |
+|                                            | eu-west-1     | `ami-a27dc5db` |
+|                                            | eu-west-2     | `ami-fdeef099` |

@@ -14,7 +14,7 @@ variable "subnet_ids" {
 
 variable "username" {}
 
-variable "version" {}
+variable "engine_version" {}
 
 variable "vpc_cidr" {}
 
@@ -73,7 +73,7 @@ resource "aws_db_instance" "rds" {
   count                     = "${var.disable ? 0 : 1}"
   identifier                = "${var.name}"
   engine                    = "postgres"
-  engine_version            = "${var.version}"
+  engine_version            = "${var.engine_version}"
   multi_az                  = "${var.multi_az}"
   allocated_storage         = "${var.storage_gbs}"
   db_subnet_group_name      = "${aws_db_subnet_group.rds.name}"

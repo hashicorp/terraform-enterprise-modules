@@ -11,6 +11,15 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
+## v201712-1 (Dec 7, 2017)
+
+APPLICATION LEVEL FEATURES:
+  * Includes new Terraform Enterprise interface featuring Workspaces (see https://www.hashicorp.com/blog/hashicorp-terraform-enterprise-beta for details)
+
+APPLICATION LEVEL BUG FIXES:
+  * Properly handle repositories with many webhooks
+  * Screens with many elements now use pages to display all data
+
 ## v201711-1 (Nov 1, 2017)
 
 APPLICATION LEVEL BUG FIXES:
