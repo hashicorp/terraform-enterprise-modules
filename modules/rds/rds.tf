@@ -123,5 +123,5 @@ output "password" {
 }
 
 output "address" {
-  value = "${aws_db_instance.rds.address}"
+  value = "${join("", aws_db_instance.rds.*.address)}"
 }

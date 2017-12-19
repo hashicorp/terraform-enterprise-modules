@@ -11,6 +11,15 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
+## v201712-2 (Dec 18, 2017)
+
+APPLICATION LEVEL BUG FIXES:
+  * Clarify the purpose of organization API tokens
+
+MACHINE IMAGE BUG FIXES:
+  * Fix postgres compatibility with the private module registry
+
+
 ## v201712-1 (Dec 7, 2017)
 
 APPLICATION LEVEL FEATURES:
