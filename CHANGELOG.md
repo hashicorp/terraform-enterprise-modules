@@ -11,6 +11,14 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
+## v201801-1 (Jan 12, 2018)
+
+APPLICATION LEVEL BUG FIXES:
+  * Fix a bug in the Terraform Module Registry where multiple jobs trying to ingress the same version of the same module concurrently errored and would not be retried
+
+MACHINE IMAGE BUG FIXES:
+  * Includes OS-level security updates to address Meltdown (see https://usn.ubuntu.com/usn/usn-3522-1/)
+
 ## v201712-2 (Dec 18, 2017)
 
 APPLICATION LEVEL BUG FIXES:
