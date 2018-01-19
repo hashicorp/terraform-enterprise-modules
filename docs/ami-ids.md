@@ -100,3 +100,9 @@ from previous releases. Best to skip them entirely.
 |                                            | us-east-1     | `ami-5cf3d726` |
 |                                            | eu-west-1     | `ami-0225b87b` |
 |                                            | eu-west-2     | `ami-34687350` |
+| **[v201801-2](../CHANGELOG.md#v201801-2)** | us-west-1     | `ami-73e1e313` |
+|                                            | us-west-2     | `ami-f70dbe8f` |
+|                                            | us-gov-west-1 | `ami-e3aa2382` |
+|                                            | us-east-1     | `ami-c9e9c7b3` |
+|                                            | eu-west-1     | `ami-dd6bf3a4` |
+|                                            | eu-west-2     | `ami-26fde642` |

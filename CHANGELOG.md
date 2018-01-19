@@ -11,6 +11,11 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
+## v201801-2 (Jan 18, 2018)
+
+APPLICATION LEVEL BUG FIXES:
+  * Increase memory allocation for Terraform Module Registry to prevent forced termination when processing large modules.
+
 ## v201801-1 (Jan 12, 2018)
 
 APPLICATION LEVEL BUG FIXES:
