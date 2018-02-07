@@ -153,14 +153,16 @@ variable "startup_script" {
   default     = ""
 }
 
-variable "external_security_group_id" {
-  description = "The ID of an existing security group to use for the ELB instead of creating one."
-  default     = ""
+variable "external_security_group_ids" {
+  description = "The IDs of existing security groups to use for the ELB instead of creating one."
+  type        = "list"
+  default     = []
 }
 
-variable "internal_security_group_id" {
-  description = "The ID of an existing security group to use for the instance instead of creating one."
-  default     = ""
+variable "internal_security_group_ids" {
+  description = "The IDs of existing security groups to use for the instance instead of creating one."
+  type        = "list"
+  default     = []
 }
 
 variable "proxy_url" {
@@ -233,35 +235,35 @@ module "route53" {
 }
 
 module "instance" {
-  source                     = "../modules/tfe-instance"
-  installation_id            = "${random_id.installation-id.hex}"
-  ami_id                     = "${var.ami_id}"
-  instance_type              = "${var.instance_type}"
-  hostname                   = "${var.fqdn}"
-  vpc_id                     = "${data.aws_subnet.instance.vpc_id}"
-  cert_id                    = "${var.cert_id}"
-  instance_subnet_id         = "${var.instance_subnet_id}"
-  elb_subnet_id              = "${var.elb_subnet_id}"
-  key_name                   = "${var.key_name}"
-  db_username                = "${var.local_db ? "atlasuser" : var.db_username}"
-  db_password                = "${var.local_db ? "databasepassword" : var.db_password}"
-  db_endpoint                = "${var.local_db ? "127.0.0.1:5432" : module.db.endpoint}"
-  db_database                = "${var.local_db ? "atlas_production" : module.db.database}"
-  redis_host                 = "${var.local_redis ? "127.0.0.1" : module.redis.host}"
-  redis_port                 = "${var.local_redis ? "6379" : module.redis.port}"
-  bucket_name                = "${var.bucket_name}"
-  bucket_region              = "${var.region}"
-  kms_key_id                 = "${coalesce(var.kms_key_id, join("", aws_kms_key.key.*.arn))}"
-  bucket_force_destroy       = "${var.bucket_force_destroy}"
-  manage_bucket              = "${var.manage_bucket}"
-  arn_partition              = "${var.arn_partition}"
-  internal_elb               = "${var.internal_elb}"
-  ebs_redundancy             = "${(var.local_redis || var.local_db) ? var.ebs_redundancy : 0}"
-  startup_script             = "${var.startup_script}"
-  external_security_group_id = "${var.external_security_group_id}"
-  internal_security_group_id = "${var.internal_security_group_id}"
-  proxy_url                  = "${var.proxy_url}"
-  local_setup                = "${var.local_setup}"
+  source                      = "../modules/tfe-instance"
+  installation_id             = "${random_id.installation-id.hex}"
+  ami_id                      = "${var.ami_id}"
+  instance_type               = "${var.instance_type}"
+  hostname                    = "${var.fqdn}"
+  vpc_id                      = "${data.aws_subnet.instance.vpc_id}"
+  cert_id                     = "${var.cert_id}"
+  instance_subnet_id          = "${var.instance_subnet_id}"
+  elb_subnet_id               = "${var.elb_subnet_id}"
+  key_name                    = "${var.key_name}"
+  db_username                 = "${var.local_db ? "atlasuser" : var.db_username}"
+  db_password                 = "${var.local_db ? "databasepassword" : var.db_password}"
+  db_endpoint                 = "${var.local_db ? "127.0.0.1:5432" : module.db.endpoint}"
+  db_database                 = "${var.local_db ? "atlas_production" : module.db.database}"
+  redis_host                  = "${var.local_redis ? "127.0.0.1" : module.redis.host}"
+  redis_port                  = "${var.local_redis ? "6379" : module.redis.port}"
+  bucket_name                 = "${var.bucket_name}"
+  bucket_region               = "${var.region}"
+  kms_key_id                  = "${coalesce(var.kms_key_id, join("", aws_kms_key.key.*.arn))}"
+  bucket_force_destroy        = "${var.bucket_force_destroy}"
+  manage_bucket               = "${var.manage_bucket}"
+  arn_partition               = "${var.arn_partition}"
+  internal_elb                = "${var.internal_elb}"
+  ebs_redundancy              = "${(var.local_redis || var.local_db) ? var.ebs_redundancy : 0}"
+  startup_script              = "${var.startup_script}"
+  external_security_group_ids = "${var.external_security_group_ids}"
+  internal_security_group_ids = "${var.internal_security_group_ids}"
+  proxy_url                   = "${var.proxy_url}"
+  local_setup                 = "${var.local_setup}"
 }
 
 module "db" {

@@ -11,6 +11,22 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
+## v201802-1 (Feb 6, 2018)
+
+APPLICATION LEVEL FEATURES:
+  * Adds support to publish modules from Github and Github Enterprise to the Module Registry
+  * Adds the ability to search by keyword and filter the workspace list
+  * Improves UI response to permissions by hiding/disabling forms/pages based on user’s access level.
+  * Adds audit events to the logs to capture the user identity, operation performed and target resource.
+  * Configurations can now be promoted across workspace via the API
+
+APPLICATION LEVEL BUG FIXES:
+  * Fixes the provider and module name parsing when ‘-’ is used in publishing of modules to the module registry.
+  * Fixes broken redirects to external site on bad requests.
+  * Fixes bug with triggering runs from Bitbucket Server when a module and workspace are both linked to the same source.
+  * Fixes rendering issues in IE11
+  * Fixes rendering issue with scroll bars on some input fields in Chrome 40.0.2214.115+ on Windows
+
 ## v201801-2 (Jan 18, 2018)
 
 APPLICATION LEVEL BUG FIXES:

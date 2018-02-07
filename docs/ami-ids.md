@@ -106,3 +106,9 @@ from previous releases. Best to skip them entirely.
 |                                            | us-east-1     | `ami-c9e9c7b3` |
 |                                            | eu-west-1     | `ami-dd6bf3a4` |
 |                                            | eu-west-2     | `ami-26fde642` |
+| **[v201802-1](../CHANGELOG.md#v201802-1)** | us-west-1     | `ami-eb6e608b` |
+|                                            | us-west-2     | `ami-b78106cf` |
+|                                            | us-gov-west-1 | `ami-26ad2547` |
+|                                            | us-east-1     | `ami-b7e2eacd` |
+|                                            | eu-west-1     | `ami-bce78fc5` |
+|                                            | eu-west-2     | `ami-7d8d681a` |
