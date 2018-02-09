@@ -112,3 +112,4 @@ from previous releases. Best to skip them entirely.
 |                                            | us-east-1     | `ami-b7e2eacd` |
 |                                            | eu-west-1     | `ami-bce78fc5` |
 |                                            | eu-west-2     | `ami-7d8d681a` |
+|                                            | ap-southeast-1| `ami-76a5e50a` |
