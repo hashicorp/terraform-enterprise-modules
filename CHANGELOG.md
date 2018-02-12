@@ -19,6 +19,7 @@ APPLICATION LEVEL FEATURES:
   * Improves UI response to permissions by hiding/disabling forms/pages based on user’s access level.
   * Adds audit events to the logs to capture the user identity, operation performed and target resource.
   * Configurations can now be promoted across workspace via the API
+  * Improves SAML team mapping to use custom names to perform matching
 
 APPLICATION LEVEL BUG FIXES:
   * Fixes the provider and module name parsing when ‘-’ is used in publishing of modules to the module registry.
