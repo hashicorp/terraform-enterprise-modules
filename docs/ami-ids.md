@@ -106,10 +106,17 @@ from previous releases. Best to skip them entirely.
 |                                            | us-east-1     | `ami-c9e9c7b3` |
 |                                            | eu-west-1     | `ami-dd6bf3a4` |
 |                                            | eu-west-2     | `ami-26fde642` |
-| **[v201802-1](../CHANGELOG.md#v201802-1)** | us-west-1     | `ami-eb6e608b` |
+| ~~**[v201802-1](../CHANGELOG.md#v201802-1)**~~ | us-west-1     | `ami-eb6e608b` |
 |                                            | us-west-2     | `ami-b78106cf` |
 |                                            | us-gov-west-1 | `ami-26ad2547` |
 |                                            | us-east-1     | `ami-b7e2eacd` |
 |                                            | eu-west-1     | `ami-bce78fc5` |
 |                                            | eu-west-2     | `ami-7d8d681a` |
 |                                            | ap-southeast-1| `ami-76a5e50a` |
+| **[v201802-2](../CHANGELOG.md#v201802-2)** | us-west-1      | `ami-0dd2db6d` |
+|                                            | us-west-2      | `ami-4535b63d` |
+|                                            | us-gov-west-1  | `ami-17169e76` |
+|                                            | us-east-1      | `ami-eb100e91` |
+|                                            | eu-west-1      | `ami-eaf48793` |
+|                                            | eu-west-2      | `ami-4975902e` |
+|                                            | ap-southeast-1 | `ami-d790ddab` |

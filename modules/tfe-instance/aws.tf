@@ -32,6 +32,18 @@ variable "redis_port" {}
 
 variable "kms_key_id" {}
 
+variable "archivist_sse" {
+  type = "string"
+  description = "Setting for server-side encryption of objects in S3; if provided, must be set to 'aws:kms'"
+  default = ""
+}
+
+variable "archivist_kms_key_id" {
+  type = "string"
+  description = "KMS key ID used by Archivist to enable S3 server-side encryption"
+  default = ""
+}
+
 variable "local_setup" {
   default = false
 }
@@ -73,7 +85,15 @@ variable "internal_security_group_ids" {
 }
 
 variable "proxy_url" {
-  default = ""
+  description = "A url (http or https, with port) to proxy all external http/https request from the cluster to."
+  type        = "string"
+  default     = ""
+}
+
+variable "no_proxy" {
+  description = "hosts to exclude from proxying (only applies when proxy_url is set)"
+  type        = "string"
+  default     = ""
 }
 
 resource "aws_security_group" "ptfe" {
@@ -258,6 +278,9 @@ KMS_KEY_ID="${var.kms_key_id}"
 INSTALL_ID="${var.installation_id}"
 DATA_REDUNDANCY="${var.ebs_redundancy}"
 PROXY_URL="${var.proxy_url}"
+EXTRA_NO_PROXY="${var.no_proxy}"
+ARCHIVIST_SSE="${var.archivist_sse}"
+ARCHIVIST_KMS_KEY_ID="${var.archivist_kms_key_id}"
     BASH
 }
 
@@ -279,6 +302,7 @@ KMS_KEY_ID="${var.kms_key_id}"
 INSTALL_ID="${var.installation_id}"
 DATA_REDUNDANCY="${var.ebs_redundancy}"
 PROXY_URL="${var.proxy_url}"
+EXTRA_NO_PROXY="${var.no_proxy}"
     BASH
 }
 

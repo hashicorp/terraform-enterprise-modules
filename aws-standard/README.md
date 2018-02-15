@@ -37,6 +37,8 @@ The following details will be requested during the application bootstrapping pro
 
 The following variables are required inputs and must be populated prior to beginning installation.
 
+**NOTE**: use only alphanumeric characters (upper- and lower-case), as well as dashes, underscores, colons, and forward-slashes (`-`, `_`, `:`, `/`).  Other characters may cause the TFE instance to be unable to boot.
+
 * `region`: The AWS region to deploy into.
 * `ami_id`: The ID of a Terraform Enterprise Base AMI. See [`ami-ids`](../docs/ami-ids.md) to look one up.
 * `fqdn`: The name that cluster be known as. This value needs to match the DNS setup for proper operations. Example: `tfe-eng01.mycompany.io`
@@ -48,6 +50,8 @@ The following variables are required inputs and must be populated prior to begin
 * `bucket_name`: Name of the S3 bucket to store artifacts used by the cluster into. This bucket is automatically created. We suggest you name it `tfe-${hostname}-data`, as convention.
 
 ### Optional Variables
+
+**NOTE**: use only alphanumeric characters (upper- and lower-case), as well as dashes, underscores, colons, and forward-slashes (`-`, `_`, `:`, `/`).  Other characters may cause the TFE instance to be unable to boot.
 
 These variables can be populated, but they have defaults that can also be used.
 
@@ -69,10 +73,13 @@ These variables can be populated, but they have defaults that can also be used.
 * `external_security_group_id` The ID of a custom EC2 Security Group to assign to the ELB for "external" access to the system. By default, a Security Group will be created that allows ingress port 80 and 443 to `0.0.0.0/0`.
 * `internal_security_group_id` The ID of a custom EC2 Security Group to assign to the instance for "internal" access to the system. By default, a Security group will be created that allos ingress port 22 and 8080 from `0.0.0.0/0`.
 * `proxy_url` A url (http or https, with port) to proxy all external http/https request from the cluster to.
+* `no_proxy` Hosts to exclude from proxying, in addition to the default set. (Only applies when proxy_url is set.)
 * `local_redis` If true, use a local Redis server on the cluster instance, eliminating the need for ElasticCache. Default: `false`
 * `local_setup` If true, write the setup data to a local file called `tfe-setup-data` instead of into S3. The instance will prompt for this setup data on its first boot, after which point it will be stored in Vault. (Requires a release `v201709-1` or later to be set to true.) Default: `false`
 * `ebs_size` The size (in GB) to configure the EBS volumes used to store redis data. Default: `100`
 * `ebs_redundancy` The number of EBS volumes to mirror together for redundancy in storing redis data. Default: `2`
+* `archivist_sse` Setting for server-side encryption of objects in S3; if provided, _must_ be set to `aws:kms`. Default: ``
+* `archivist_kms_key_id` KMS key ID (full ARN) for server-side encryption of objects stored in S3.
 
 #### Startup Script
 

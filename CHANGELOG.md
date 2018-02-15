@@ -11,6 +11,18 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
+## v201802-2 (Feb 15, 2018)
+
+APPLICATION LEVEL FEATURES:
+  * Ensure the Archivist storage service sets the `x-amz-server-side-encryption` and `x-amz-server-side-encryption-aws-kms-key-id` HTTP headers on all `PutObject` calls to S3, when a KMS key is configured.
+  * Add new `no_proxy` variable to support hosts to exclude from being proxied via `proxy_url`, if configured.
+
+APPLICATION LEVEL BUG FIXES:
+  * Fix a bug related to audit logging that prevented webhooks from being handled properly.
+
+CUSTOMER NOTES:
+  * Added documentation to `aws-standard/README.md` describing character constraints on user-provided values, such as `db_password`.
+
 ## v201802-1 (Feb 6, 2018)
 
 APPLICATION LEVEL FEATURES:

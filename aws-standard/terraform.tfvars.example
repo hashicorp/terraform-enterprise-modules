@@ -107,3 +107,19 @@
 # We recommend setting this to true for new installations, as it will be the default in a future release.
 # Default: false
 # local_redis =
+#
+# A url (http or https, with port) to proxy all external http/https request from the cluster to.
+# Default: ""
+# proxy_url =
+#
+# Hosts to exclude from proxying, in addition to the default set. (Only applies when proxy_url is set.)
+# Default: ""
+# no_proxy =
+#
+# Setting for server-side encryption of objects in S3; if provided, must be set to "aws:kms".
+# Default: ""
+# archivist_sse =
+#
+# KMS key ID (full ARN) for server-side encryption of objects stored in S3.
+# Default: ""
+# archivist_kms_key_id =

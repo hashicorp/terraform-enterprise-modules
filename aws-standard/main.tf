@@ -138,6 +138,18 @@ variable "kms_key_id" {
   default     = ""
 }
 
+variable "archivist_sse" {
+  type = "string"
+  description = "Setting for server-side encryption of objects in S3; if provided, must be set to 'aws:kms'"
+  default     = ""
+}
+
+variable "archivist_kms_key_id" {
+  type = "string"
+  description = "An optional KMS key for use by Archivist to enable S3 server-side encryption"
+  default     = ""
+}
+
 variable "arn_partition" {
   description = "AWS partition to use (used mostly by govcloud)"
   default     = "aws"
@@ -168,6 +180,12 @@ variable "internal_security_group_ids" {
 variable "proxy_url" {
   description = "A url (http or https, with port) to proxy all external http/https request from the cluster to."
   default     = ""
+}
+
+variable "no_proxy" {
+  type = "string"
+  description = "hosts to exclude from proxying (only applies when proxy_url is set)"
+  default = ""
 }
 
 # A random identifier to use as a suffix on resource names to prevent
@@ -254,6 +272,8 @@ module "instance" {
   bucket_name                 = "${var.bucket_name}"
   bucket_region               = "${var.region}"
   kms_key_id                  = "${coalesce(var.kms_key_id, join("", aws_kms_key.key.*.arn))}"
+  archivist_sse               = "${var.archivist_sse}"
+  archivist_kms_key_id        = "${var.archivist_kms_key_id}"
   bucket_force_destroy        = "${var.bucket_force_destroy}"
   manage_bucket               = "${var.manage_bucket}"
   arn_partition               = "${var.arn_partition}"
@@ -263,6 +283,7 @@ module "instance" {
   external_security_group_ids = "${var.external_security_group_ids}"
   internal_security_group_ids = "${var.internal_security_group_ids}"
   proxy_url                   = "${var.proxy_url}"
+  no_proxy                    = "${var.no_proxy}"
   local_setup                 = "${var.local_setup}"
 }
 
