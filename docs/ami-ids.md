@@ -120,3 +120,10 @@ from previous releases. Best to skip them entirely.
 |                                            | eu-west-1      | `ami-eaf48793` |
 |                                            | eu-west-2      | `ami-4975902e` |
 |                                            | ap-southeast-1 | `ami-d790ddab` |
+| **[v201802-3](../CHANGELOG.md#v201802-3)** | us-west-1      | `ami-835258e3` |
+|                                            | us-west-2      | `ami-506be028` |
+|                                            | us-gov-west-1  | `ami-3e67ec5f` |
+|                                            | us-east-1      | `ami-c1d92ebc` |
+|                                            | eu-west-1      | `ami-1ed59267` |
+|                                            | eu-west-2      | `ami-4f49ad28` |
+|                                            | ap-southeast-1 | `ami-08276d74` |

@@ -11,6 +11,43 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
+## v201802-3 (Feb 28, 2018)
+
+APPLICATION LEVEL FEATURES:
+
+* Enable the Module Registry for everyone, but disable unsupported VCS providers (GitLab, Bitbucket Cloud).
+* Allow site admin membership to be managed through SAML and make the team name configurable.
+* The SAML email address setting was removed in favor of always using `urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress`.
+* The SAML `AuthnContextClassRef` is hardcoded to `urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport` instead of being sent as a blank value.
+* Improved SAML error handling and reporting.
+* Adds support for configuring the "including submodules on clone" setting when creating a workspace. Previously this had to be configured after creating a workspace, on the settings page.
+* Move workspace SSH key setting from integrations page to settings page in UI.
+* Add top bar with controls to plan and apply log viewer when in full screen mode.
+* Improvements to VCS respository selection UI when creating a workspace.
+* Improvements to error handling in the UI when creating a workspace.
+* Remove VCS root path setting from workspaces in UI and API.
+* API responses with a 422 status have a new format with better error reporting.
+* Remove unused attributes from run API responses: `auto-apply`, `error-text`, `metadata`, `terraform-version`, `input-state-version`, `workspace-run-alerts`.
+* Remove the `compound-workspace` API endpoints in favor of the `workspace` API endpoints.
+* API responses that contain `may-<action>` keys will have those keys moved into a new part of the response: `actions`.
+* Organizations now have names in place of usernames. API responses will no longer serialize a `username` key but will instead serialize a `name`.
+
+APPLICATION LEVEL BUG FIXES:
+
+* Allow workspace admins to read and update which SSH key is associated with a workspace. Previously only workspace owners could do this.
+* Reject environment variables that contain newlines.
+* Fix a bug that caused the VCS repo associated with a workspace displayed incorrectly for new workspaces without runs and workspaces whose current run used to a promoted configuration version.
+* Fix a bug that resulted in plan and apply log output to sometimes be truncated in the UI.
+* Fix a bug that prevented some environments and workspaces from being deleted.
+* A few small fixes to Sentinel error reporting during creation and policy check in the UI.
+* A few small fixes to UI when managing SSH keys.
+* Missing translation added for configuration versions uploaded via the API.
+
+APPLICATION LEVEL SECURITY FIXES:
+
+* Upgrade ruby-saml gem to 1.7.0 to address CVE-2017-11428.
+* Upgrade sinatra gem to 1.4.8 to address CVE-2018-7212.
+
 ## v201802-2 (Feb 15, 2018)
 
 APPLICATION LEVEL FEATURES:
