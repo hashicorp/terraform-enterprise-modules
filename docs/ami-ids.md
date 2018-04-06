@@ -127,3 +127,10 @@ from previous releases. Best to skip them entirely.
 |                                            | eu-west-1      | `ami-1ed59267` |
 |                                            | eu-west-2      | `ami-4f49ad28` |
 |                                            | ap-southeast-1 | `ami-08276d74` |
+| **[v201804-1](../CHANGELOG.md#v201804-1)** | us-west-1      | `ami-292b3b49` |
+|                                            | us-west-2      | `ami-12e5826a` |
+|                                            | us-gov-west-1  | `ami-0372e762` |
+|                                            | us-east-1      | `ami-9b79d7e6` |
+|                                            | eu-west-1      | `ami-5559002c` |
+|                                            | eu-west-2      | `ami-5d78993a` |
+|                                            | ap-southeast-1 | `ami-efb79293` |

@@ -41,39 +41,39 @@ The following variables are required inputs and must be populated prior to begin
 
 * `region`: The AWS region to deploy into.
 * `ami_id`: The ID of a Terraform Enterprise Base AMI. See [`ami-ids`](../docs/ami-ids.md) to look one up.
-* `fqdn`: The name that cluster be known as. This value needs to match the DNS setup for proper operations. Example: `tfe-eng01.mycompany.io`
+* `fqdn`: The hostname that the cluster will be accessible at. This value needs to match the DNS setup for proper operations. Example: `tfe-eng01.mycompany.io`
 * `cert_id`: An AWS certificate ARN. This is the certification that will be used by the ELB for the cluster. Example: `arn:aws:acm:us-west-2:241656615859:certificate/f32fa674-de62-4681-8035-21a4c81474c6`
-* `instance_subnet_id`: Subnet id of the subnet that the cluster's instance will be placed into. If this is a public subnet, the instance will be assigned a public IP. This is not required as the primary cluster interface is an ELB registered with the hostname. Example: `subnet-0de26b6a`
-* `elb_subnet_id`: Subnet id of the subnet that the cluster's load balancer will be placed into. If this is a public subnet, the load balancer will be accessible from the public internet. This is not required - the ELB can be marked as private via the `internal_elb` option below.
-* `data_subnet_ids`: Subnet ids that will be used to create the data services (RDS and ElastiCache) used by the cluster. There must be 2 subnet ids given for proper redundency. Example: `["subnet-0ce26b6b", "subnet-d0f35099"]`
+* `instance_subnet_id`: Subnet ID of the subnet that the cluster's instance will be placed into. If this is a public subnet, the instance will be assigned a public IP. This is not required as the primary cluster interface is an ELB registered with the hostname. Example: `subnet-0de26b6a`
+* `elb_subnet_id`: Subnet ID of the subnet that the cluster's load balancer will be placed into. If this is a public subnet, the load balancer will be accessible from the public internet. This is not required — the ELB can be marked as private via the `internal_elb` option below.
+* `data_subnet_ids`: Subnet IDs that will be used to create the data services (RDS and ElastiCache) used by the cluster. There must be 2 subnet IDs given for proper redundency. Example: `["subnet-0ce26b6b", "subnet-d0f35099"]`
 * `db_password`: Password that will be used to access RDS. Example: `databaseshavesecrets`
-* `bucket_name`: Name of the S3 bucket to store artifacts used by the cluster into. This bucket is automatically created. We suggest you name it `tfe-${hostname}-data`, as convention.
+* `bucket_name`: Name of the S3 bucket to store artifacts used by the cluster into. This bucket is automatically created. We suggest you name it `tfe-<HOSTNAME>-data`, as convention.
 
 ### Optional Variables
 
-**NOTE**: use only alphanumeric characters (upper- and lower-case), as well as dashes, underscores, colons, and forward-slashes (`-`, `_`, `:`, `/`).  Other characters may cause the TFE instance to be unable to boot.
-
 These variables can be populated, but they have defaults that can also be used.
 
-* `key_name`: Name of AWS SSH Key Pair that will be used. The pair needs to already exist, it will not be created. If this variable is not set, no SSH access will be available to the TFE instance.
-* `manage_bucket` Indicate if this terraform state should create and own the bucket. Set this to false if you are reusing an existing bucket.
+**NOTE**: use only alphanumeric characters (upper- and lower-case), as well as dashes, underscores, colons, and forward-slashes (`-`, `_`, `:`, `/`).  Other characters may cause the TFE instance to be unable to boot.
+
+* `key_name`: Name of AWS SSH Key Pair that will be used (as shown in the AWS console). The pair needs to already exist, it will not be created. **If this variable is not set, no SSH access will be available to the Terraform Enterprise instance.**
+* `manage_bucket` Indicate if this Terraform state should create and own the bucket. Set this to false if you are reusing an existing bucket.
 * `kms_key_id` Specify the ARN for a KMS key to use rather than having one
   created automatically.
 * `db_username` Username that will be used to access RDS. Default: `atlas`
 * `db_size_gb` Disk size of the RDS instance to create. Default: `80`
 * `db_instance_class` Instance type of the RDS instance to create. Default: `db.m4.large`
-* `db_multi_az` Configure if the RDS cluster should multiple AZs to improve snapshot performance. Default: `true`
+* `db_multi_az` Configure if the RDS cluster should use multiple AZs to improve snapshot performance. Default: `true`
 * `db_snapshot_identifier` Previously made snapshot to restore when RDS is created. This is for migration of data between clusters. Default is to create the database fresh.
 * `db_name` This only needs to be set if you're migrating from an RDS instance with a different database name.
-* `zone_id` The id of a Route53 zone that a record for the cluster will be installed into. Leave this blank if you need to manage DNS elsewhere. Example: `ZVEF52R7NLTW6`
-* `hostname` If specifying `zone_id`, this should be set to the name that is used for the record to be registered with the zone. This value combined with the zone information will form the full DNS name for TFE. Example: `emp-test`
+* `zone_id` The ID of a Route53 zone that a record for the cluster will be installed into. Leave this blank if you need to manage DNS elsewhere. Example: `ZVEF52R7NLTW6`
+* `hostname` If specifying `zone_id`, this should be set to the name that is used for the record to be registered with the zone. This value combined with the zone information will form the full DNS name for Terraform Enterprise. Example: `emp-test`
 * `arn_partition` Used mostly for govcloud installations. Example: `aws-us-gov`
 * `internal_elb` Indicate to AWS that the created ELB is internal only. Example: `true`
-* `startup_script` Shell code that should run on the first boot.
-* `external_security_group_id` The ID of a custom EC2 Security Group to assign to the ELB for "external" access to the system. By default, a Security Group will be created that allows ingress port 80 and 443 to `0.0.0.0/0`.
-* `internal_security_group_id` The ID of a custom EC2 Security Group to assign to the instance for "internal" access to the system. By default, a Security group will be created that allos ingress port 22 and 8080 from `0.0.0.0/0`.
-* `proxy_url` A url (http or https, with port) to proxy all external http/https request from the cluster to.
-* `no_proxy` Hosts to exclude from proxying, in addition to the default set. (Only applies when proxy_url is set.)
+* `startup_script` Shell code that should run on the first boot. This is explained in more detail below.
+* `external_security_group_ids` The IDs of existing EC2 Security Groups to assign to the ELB for "external" access to the system. By default, a Security Group will be created that allows ingress to ports 80 and 443 from `0.0.0.0/0`.
+* `internal_security_group_ids` The IDs of existing EC2 Security Groups to assign to the instance for "internal" access to the system. By default, a Security group will be created that allows ingress to ports 22 and 8080 from `0.0.0.0/0`.
+* `proxy_url` A url (http or https, with port) to proxy all external http/https request from the cluster to. This is explained in more detail below.
+* `no_proxy` Hosts to exclude from proxying, in addition to the default set. (Only applies when `proxy_url` is set.)
 * `local_redis` If true, use a local Redis server on the cluster instance, eliminating the need for ElasticCache. Default: `false`
 * `local_setup` If true, write the setup data to a local file called `tfe-setup-data` instead of into S3. The instance will prompt for this setup data on its first boot, after which point it will be stored in Vault. (Requires a release `v201709-1` or later to be set to true.) Default: `false`
 * `ebs_size` The size (in GB) to configure the EBS volumes used to store redis data. Default: `100`
@@ -81,11 +81,11 @@ These variables can be populated, but they have defaults that can also be used.
 * `archivist_sse` Setting for server-side encryption of objects in S3; if provided, _must_ be set to `aws:kms`. Default: ``
 * `archivist_kms_key_id` KMS key ID (full ARN) for server-side encryption of objects stored in S3.
 
-#### Startup Script
+#### Startup Script (Optional)
 
-The `startup_script` variable can contain any shell code and
-will be executed on the first boot. This mechanism can be used to custom the AMI,
-adding additional software or configuration.
+The `startup_script` variable can contain any shell code and will be executed on
+the first boot. This mechanism can be used to customize the AMI, adding
+additional software or configuration.
 
 For example, to install a custom SSL certificate for the services to trust:
 
@@ -115,15 +115,18 @@ adduser my-admin
 SHELL
 ```
 
-#### Proxy Support
+#### Proxy Support (Optional)
 
 The cluster can be configured to send all outbound HTTP and HTTPS traffic
-through a proxy. By setting the `proxy_url` to either an http:// or https:// url,
-all systems that make HTTP and HTTPS request will connect to the proxy to
+through a proxy. By setting the `proxy_url` to either an http:// or https://
+url, all systems that make HTTP and HTTPS request will connect to the proxy to
 perform the request.
 
-*NOTE* This is only for outbound HTTP and HTTPS requests. Other traffic such
-as SMTP and NTP are not proxied and will attempt to connect directly.
+A comma-separated list of hosts to be excluded from proxying can be specified
+via the `no_proxy` variable.
+
+~> **Note:** This is only for outbound HTTP and HTTPS requests. Other traffic
+such as SMTP and NTP are not proxied and will attempt to connect directly.
 
 ### Populating Variables
 

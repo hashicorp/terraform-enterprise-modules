@@ -139,13 +139,13 @@ variable "kms_key_id" {
 }
 
 variable "archivist_sse" {
-  type = "string"
+  type        = "string"
   description = "Setting for server-side encryption of objects in S3; if provided, must be set to 'aws:kms'"
   default     = ""
 }
 
 variable "archivist_kms_key_id" {
-  type = "string"
+  type        = "string"
   description = "An optional KMS key for use by Archivist to enable S3 server-side encryption"
   default     = ""
 }
@@ -183,9 +183,9 @@ variable "proxy_url" {
 }
 
 variable "no_proxy" {
-  type = "string"
+  type        = "string"
   description = "hosts to exclude from proxying (only applies when proxy_url is set)"
-  default = ""
+  default     = ""
 }
 
 # A random identifier to use as a suffix on resource names to prevent
@@ -297,7 +297,7 @@ module "db" {
   password                = "${var.db_password}"
   storage_gbs             = "${var.db_size_gb}"
   subnet_ids              = "${var.data_subnet_ids}"
-  engine_version          = "9.4.7"
+  engine_version          = "9.4"
   vpc_cidr                = "${data.aws_vpc.vpc.cidr_block}"
   vpc_id                  = "${data.aws_subnet.instance.vpc_id}"
   backup_retention_period = "31"
