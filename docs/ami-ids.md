@@ -134,3 +134,10 @@ from previous releases. Best to skip them entirely.
 |                                            | eu-west-1      | `ami-5559002c` |
 |                                            | eu-west-2      | `ami-5d78993a` |
 |                                            | ap-southeast-1 | `ami-efb79293` |
+| **[v201804-2](../CHANGELOG.md#v201804-2)** | us-west-1      | `ami-292b3b49` |
+|                                            | us-west-2      | `ami-12e5826a` |
+|                                            | us-gov-west-1  | `ami-0372e762` |
+|                                            | us-east-1      | `ami-9b79d7e6` |
+|                                            | eu-west-1      | `ami-5559002c` |
+|                                            | eu-west-2      | `ami-5d78993a` |
+|                                            | ap-southeast-1 | `ami-efb79293` |

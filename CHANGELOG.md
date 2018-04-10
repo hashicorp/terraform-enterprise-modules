@@ -11,6 +11,12 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
+## v201804-2 (April 10, 2018)
+
+APPLICATION LEVEL BUG FIXES:
+
+* Fix terraform being able to properly authenticate to the Module Registry running in the cluster (installer only)
+
 ## v201804-1 (April 5, 2018)
 
 APPLICATION LEVEL FEATURES:
