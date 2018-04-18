@@ -11,6 +11,14 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
+## v201804-3 (April 17, 2018)
+
+APPLICATION LEVEL BUG FIXES:
+
+- Do not configure statsd; works around a possible Rails bug when starting Atlas. 
+- Remove race condition when starting Vault. (installer only)
+- More sane timeouts when unable to download slugs. 
+
 ## v201804-2 (April 10, 2018)
 
 APPLICATION LEVEL BUG FIXES:

@@ -141,3 +141,10 @@ from previous releases. Best to skip them entirely.
 |                                            | eu-west-1      | `ami-5559002c` |
 |                                            | eu-west-2      | `ami-5d78993a` |
 |                                            | ap-southeast-1 | `ami-efb79293` |
+| **[v201804-3](../CHANGELOG.md#v201804-3)** | us-west-1      | `ami-ebfdef8b` |
+|                                            | us-west-2      | `ami-f3167a8b` |
+|                                            | us-gov-west-1  | `ami-fa81159b` |
+|                                            | us-east-1      | `ami-68df7217` |
+|                                            | eu-west-1      | `ami-a4d9f8dd` |
+|                                            | eu-west-2      | `ami-86be5de1` |
+|                                            | ap-southeast-1 | `ami-bd4062c1` |
