@@ -148,3 +148,10 @@ from previous releases. Best to skip them entirely.
 |                                            | eu-west-1      | `ami-a4d9f8dd` |
 |                                            | eu-west-2      | `ami-86be5de1` |
 |                                            | ap-southeast-1 | `ami-bd4062c1` |
+| **[v201805-1](../CHANGELOG.md#v201805-1)** | us-west-1      | `ami-c9edf1a9` |
+|                                            | us-west-2      | `ami-8c4337f4` |
+|                                            | us-gov-west-1  | `ami-309b0c51` |
+|                                            | us-east-1      | `ami-357cc74a` |
+|                                            | eu-west-1      | `ami-5edbf327` |
+|                                            | eu-west-2      | `ami-a9f311ce` |
+|                                            | ap-southeast-1 | `ami-c4a78fb8` |
