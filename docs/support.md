@@ -32,6 +32,7 @@ You will see output similar to:
 Attach the `hashicorp-support.tar.gz.enc` file to your support request. If it is
 too large to attach you can send this to us via S3, FTP, or another data store
 you control.
+Alternately, you can upload to our [Send Safely Endpoint](https://hashicorp.sendsafely.com/auth/)
 
 **Warning:** Make sure to attach the file ending in `.tar.gz.enc` as the
 contents of `.tar.gz` are not encrypted!
