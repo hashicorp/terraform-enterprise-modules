@@ -155,3 +155,11 @@ from previous releases. Best to skip them entirely.
 |                                            | eu-west-1      | `ami-5edbf327` |
 |                                            | eu-west-2      | `ami-a9f311ce` |
 |                                            | ap-southeast-1 | `ami-c4a78fb8` |
+| **[v201806-1](../CHANGELOG.md#v201806-1)** | us-west-1      | `ami-4f26c32c` |
+|                                            | us-west-2      | `ami-61afe919` |
+|                                            | us-gov-west-1  | `ami-7571e014` |
+|                                            | us-east-1      | `ami-50f7882f` |
+|                                            | eu-west-1      | `ami-bb6969c2` |
+|                                            | eu-west-2      | `ami-7839d61f` |
+|                                            | ap-southeast-1 | `ami-03251f7f` |
+
