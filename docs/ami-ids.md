@@ -162,4 +162,10 @@ from previous releases. Best to skip them entirely.
 |                                            | eu-west-1      | `ami-bb6969c2` |
 |                                            | eu-west-2      | `ami-7839d61f` |
 |                                            | ap-southeast-1 | `ami-03251f7f` |
-
+| **[v201806-2](../CHANGELOG.md#v201806-2)** | us-west-1      | `ami-43bf5920` |
+|                                            | us-west-2      | `ami-99ce80e1` |
+|                                            | us-gov-west-1  | `ami-ff79e99e` |
+|                                            | us-east-1      | `ami-2fc69050` |
+|                                            | eu-west-1      | `ami-98484772` |
+|                                            | eu-west-2      | `ami-abbc55cc` |
+|                                            | ap-southeast-1 | `ami-b9eeedc5` |

@@ -11,7 +11,20 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
-## v201806-1 (June 7th, 2018)
+## <a name="v201806-2"></a> v201806-2 (June 22, 2018)
+
+APPLICATION LEVEL FEATURES:
+
+- Add GCS support for artifact storage. (Replicated only)
+- Allow for tuning of max usable memory per run. (Replicated only)
+
+APPLICATION LEVEL BUG FIXES:
+
+- Error when a state file is found in a VCS repository.
+- Fix occasional proxy config failure. (Replicated only)
+- Use `X-Forwarded-For` in audit log entries, if provided. (Replicated only)
+
+## <a name="v201806-1"></a> v201806-1 (June 7th, 2018)
 
 APPLICATION LEVEL FEATURES:
 
@@ -47,7 +60,7 @@ APPLICATION API BREAKING CHANGES:
 
 - Updated API endpoints to return external id as the user's id, changed from username.
 
-## v201805-1 (May 2nd, 2018)
+## <a name="v201805-1"></a> v201805-1 (May 2nd, 2018)
 
 APPLICATION LEVEL FEATURES:
 
@@ -94,7 +107,7 @@ APPLICATION API BREAKING CHANGES:
 
 APPLICATION LEVEL SECURITY FIXES:
 
-## v201804-3 (April 17, 2018)
+## <a name="v201804-3"></a> v201804-3 (April 17, 2018)
 
 APPLICATION LEVEL BUG FIXES:
 
@@ -102,13 +115,13 @@ APPLICATION LEVEL BUG FIXES:
 - Remove race condition when starting Vault. (installer only)
 - More sane timeouts when unable to download slugs. 
 
-## v201804-2 (April 10, 2018)
+## <a name="v201804-2"></a> v201804-2 (April 10, 2018)
 
 APPLICATION LEVEL BUG FIXES:
 
 * Fix terraform being able to properly authenticate to the Module Registry running in the cluster (installer only)
 
-## v201804-1 (April 5, 2018)
+## <a name="v201804-1"></a> v201804-1 (April 5, 2018)
 
 APPLICATION LEVEL FEATURES:
 
@@ -163,7 +176,7 @@ MACHINE IMAGE FIXES:
 
 * Adjust for EBS volumes have unexpected tags
 
-## v201802-3 (Feb 28, 2018)
+## <a name="v201802-3"></a> v201802-3 (Feb 28, 2018)
 
 APPLICATION LEVEL FEATURES:
 
@@ -200,7 +213,7 @@ APPLICATION LEVEL SECURITY FIXES:
 * Upgrade ruby-saml gem to 1.7.0 to address CVE-2017-11428.
 * Upgrade sinatra gem to 1.4.8 to address CVE-2018-7212.
 
-## v201802-2 (Feb 15, 2018)
+## <a name="v201802-2"></a> v201802-2 (Feb 15, 2018)
 
 APPLICATION LEVEL FEATURES:
   * Ensure the Archivist storage service sets the `x-amz-server-side-encryption` and `x-amz-server-side-encryption-aws-kms-key-id` HTTP headers on all `PutObject` calls to S3, when a KMS key is configured.
@@ -212,7 +225,7 @@ APPLICATION LEVEL BUG FIXES:
 CUSTOMER NOTES:
   * Added documentation to `aws-standard/README.md` describing character constraints on user-provided values, such as `db_password`.
 
-## v201802-1 (Feb 6, 2018)
+## <a name="v201802-1"></a> v201802-1 (Feb 6, 2018)
 
 APPLICATION LEVEL FEATURES:
   * Adds support to publish modules from Github and Github Enterprise to the Module Registry
@@ -229,12 +242,12 @@ APPLICATION LEVEL BUG FIXES:
   * Fixes rendering issues in IE11
   * Fixes rendering issue with scroll bars on some input fields in Chrome 40.0.2214.115+ on Windows
 
-## v201801-2 (Jan 18, 2018)
+## <a name="v201801-2"></a> v201801-2 (Jan 18, 2018)
 
 APPLICATION LEVEL BUG FIXES:
   * Increase memory allocation for Terraform Module Registry to prevent forced termination when processing large modules.
 
-## v201801-1 (Jan 12, 2018)
+## <a name="v201801-1"></a> v201801-1 (Jan 12, 2018)
 
 APPLICATION LEVEL BUG FIXES:
   * Fix a bug in the Terraform Module Registry where multiple jobs trying to ingress the same version of the same module concurrently errored and would not be retried
@@ -242,7 +255,7 @@ APPLICATION LEVEL BUG FIXES:
 MACHINE IMAGE BUG FIXES:
   * Includes OS-level security updates to address Meltdown (see https://usn.ubuntu.com/usn/usn-3522-1/)
 
-## v201712-2 (Dec 18, 2017)
+## <a name="v201712-2"></a> v201712-2 (Dec 18, 2017)
 
 APPLICATION LEVEL BUG FIXES:
   * Clarify the purpose of organization API tokens
@@ -251,7 +264,7 @@ MACHINE IMAGE BUG FIXES:
   * Fix postgres compatibility with the private module registry
 
 
-## v201712-1 (Dec 7, 2017)
+## <a name="v201712-1"></a> v201712-1 (Dec 7, 2017)
 
 APPLICATION LEVEL FEATURES:
   * Includes new Terraform Enterprise interface featuring Workspaces (see https://www.hashicorp.com/blog/hashicorp-terraform-enterprise-beta for details)
@@ -260,7 +273,7 @@ APPLICATION LEVEL BUG FIXES:
   * Properly handle repositories with many webhooks
   * Screens with many elements now use pages to display all data
 
-## v201711-1 (Nov 1, 2017)
+## <a name="v201711-1"></a> v201711-1 (Nov 1, 2017)
 
 APPLICATION LEVEL BUG FIXES:
   * The Bitbucket Server integration no longer sends empty JSON payloads with get requests
@@ -270,19 +283,19 @@ MACHINE IMAGE BUG FIXES:
   * Increase the capacity of the UI to prevent it being unavailable due
     to starvation.
 
-## v201709-3 (Sep 29, 2017)
+## <a name="v201709-3"></a> v201709-3 (Sep 29, 2017)
 
 MACHINE IMAGE BUG FIXES:
   * Properly write the vault root key envvar file.
 
-## v201709-2 (Sep 28, 2017)
+## <a name="v201709-2"></a> v201709-2 (Sep 28, 2017)
 
 MACHINE IMAGE BUG FIXES:
   * cloud.cfg no longer conflicts with the cloud-init package.
   * Restoring from an older, timestamp based backup no longer hangs when
     there are a large number of backups.
 
-## v201709-1 (Sep 13, 2017)
+## <a name="v201709-1"></a> v201709-1 (Sep 13, 2017)
 
 APPLICATION LEVEL FEATURES:
   * Sends a flag to terraform workers on all new runs to enable filesystem 
@@ -309,14 +322,14 @@ TERRAFORM CONFIG FEATURES:
   * Make `key_name` variable optional, allowing for deployments without SSH
     access.
 
-## v201708-2 (Aug 16, 2017)
+## <a name="v201708-2"></a> v201708-2 (Aug 16, 2017)
 
 MACHINE IMAGE BUG FIXES:
 
   * Correct out of memory condition with various internal services that prevent
     proper operation.
 
-## v201708-1 (Aug 8, 2017)
+## <a name="v201708-1"></a> v201708-1 (Aug 8, 2017)
 
 APPLICATION LEVEL BUG FIXES:
 
@@ -329,13 +342,13 @@ MACHINE IMAGE BUG FIXES:
 
   * Manage upgrading from v201706-4 and earlier properly.
 
-## v201707-2 (July 26, 2017)
+## <a name="v201707-2"></a> v201707-2 (July 26, 2017)
 
 APPLICATION LEVEL BUG FIXES:
 
   * Send commit status updates to VCS providers while waiting for MFA input
 
-## v201707-1 (July 18, 2017)
+## <a name="v201707-1"></a> v201707-1 (July 18, 2017)
 
 APPLICATION LEVEL FEATURES:
 
@@ -368,7 +381,7 @@ TERRAFORM CONFIG FEATURES:
     the IAM role used by the cluster instance.
 
 
-## v201706-4 (June 26, 2017)
+## <a name="v201706-4"></a> v201706-4 (June 26, 2017)
 
 APPLICATION LEVEL FEATURES:
 
@@ -396,13 +409,13 @@ EXTRAS CHANGES:
   * Parametirez s3 endpoint region used for setup of S3 <=> VPC peering.
 
 
-## v201706-3 (June 7, 2017)
+## <a name="v201706-3"></a> v201706-3 (June 7, 2017)
 
 MACHINE IMAGE BUG FIXES:
 
   * Exclude all cluster local traffic from using the outbound proxy.
 
-## v201706-2 (June 5, 2017)
+## <a name="v201706-2"></a> v201706-2 (June 5, 2017)
 
 APPLICATION LEVEL BUG FIXES:
 
@@ -414,7 +427,7 @@ MACHINE IMAGE FEATURES:
   * Added `rails-console` to provide swift access to the Ruby on Rails
     console, used for lowlevel application debugging and inspection.
 
-## v201706-1 (June 1, 2017)
+## <a name="v201706-1"></a> v201706-1 (June 1, 2017)
 
 APPLICATION LEVEL FEATURES:
 
@@ -456,7 +469,7 @@ DOCUMENTATION CHANGES:
   * Add [`managing-tool-versions`](docs/managing-tool-versions.md) to document
     usage of the `/admin/tools` control panel.
 
-## v201705-2 (May 23, 2017)
+## <a name="v201705-2"></a> v201705-2 (May 23, 2017)
 
 APPLICATION LEVEL CHANGES:
 
@@ -486,7 +499,7 @@ DOCUMENTATION CHANGES:
   * Include [documentation](docs/support.md) on sending support information via the
     `hashicorp-support` tool.
 
-## v201705-1 (May 12, 2017)
+## <a name="v201705-1"></a> v201705-1 (May 12, 2017)
 
 APPLICATION LEVEL CHANGES:
 
@@ -527,7 +540,7 @@ TERRAFORM CONFIG CHANGES:
  * Add KMS alias for key that is utilized for better inventory tracking.
 
 
-## v201704-3
+## <a name="v201704-3"></a> v201704-3
 
 APPLICATION LEVEL CHANGES:
 
@@ -544,7 +557,7 @@ TERRAFORM CONFIG CHANGES:
 * Add explicit IAM policy to KMS key when Terraform manages it
 * Add explicit KMS Key Alias for more easily referencing the KMS key in the AWS Web Console
 
-## v201704-2
+## <a name="v201704-2"></a> v201704-2
 
 APPLICATION LEVEL CHANGES:
 
@@ -561,7 +574,7 @@ TERRAFORM CONFIG CHANGES:
 * Allow `kms_key_id` to be optionally specified as input
 * Remove unused `az` variable
 
-## v201704-1
+## <a name="v201704-1"></a> v201704-1
 
 APPLICATION LEVEL CHANGES:
 
@@ -577,7 +590,7 @@ TERRAFORM CONFIG CHANGES:
 
 * Prevent extraneous diffs after RDS database creation
 
-## v201703-2
+## <a name="v201703-2"></a> v201703-2
 
 APPLICATION LEVEL CHANGES:
 
@@ -588,6 +601,6 @@ MACHINE IMAGE CHANGES:
 * Prevent race condition by waiting until Consul is running before continuing boot 
 * Ensure that Vault is unsealed when instance reboots
 
-## v201703-1
+## <a name="v201703-1"></a> v201703-1
 
 * Initial release!
