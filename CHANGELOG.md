@@ -11,6 +11,12 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
+## <a name="v201807-2"></a> v201807-1 (July 20, 2018)
+
+APPLICATION LEVEL BUG FIXES:
+
+1. Fixed an issue where partial SAML settings prevented the application from booting.
+
 ## <a name="v201807-1"></a> v201807-1 (July 16, 2018)
 
 APPLICATION LEVEL FEATURES:
