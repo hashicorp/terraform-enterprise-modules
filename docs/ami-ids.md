@@ -169,7 +169,14 @@ from previous releases. Best to skip them entirely.
 |                                            | eu-west-1      | `ami-98484772` |
 |                                            | eu-west-2      | `ami-abbc55cc` |
 |                                            | ap-southeast-1 | `ami-b9eeedc5` |
-| **[v201806-2](../CHANGELOG.md#v201806-2)** | us-west-1      | `ami-efb05d8c` |
+| **[v201807-1](../CHANGELOG.md#v201807-1)** | us-west-1      | `ami-90ff1df3` |
+|                                            | us-west-2      | `ami-c46439bc` |
+|                                            | us-gov-west-1  | `ami-d1e97bb0` |
+|                                            | us-east-1      | `ami-85f9c7fa` |
+|                                            | eu-west-1      | `ami-21b1adcb` |
+|                                            | eu-west-2      | `ami-c625cea1` |
+|                                            | ap-southeast-1 | `ami-dd780237` |
+| **[v201807-2](../CHANGELOG.md#v201807-2)** | us-west-1      | `ami-efb05d8c` |
 |                                            | us-west-2      | `ami-ffb0ef87` |
 |                                            | us-gov-west-1  | `ami-4744d626` |
 |                                            | us-east-1      | `ami-fa333485` |

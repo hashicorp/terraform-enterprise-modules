@@ -11,7 +11,7 @@ Where:
 * `YYYY` and `MM` are the year and month of the release.
 * `N` is increased with each release in a given month, starting with `1`
 
-## <a name="v201807-2"></a> v201807-1 (July 20, 2018)
+## <a name="v201807-2"></a> v201807-2 (July 20, 2018)
 
 APPLICATION LEVEL BUG FIXES:
 
