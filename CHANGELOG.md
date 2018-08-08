@@ -21,7 +21,6 @@ APPLICATION LEVEL FEATURES:
 1. Changed link to module status page to always display if any module versions had ingress errors, instead of only when the latest version had ingress errors. 
 1. Changed organization dropdown to simplify it. Organization settings are now linked at the top level. 
 1. Changed webpage page titles for all pages to be unique. 
-1. Added site admin settings to configure fair run queueing. 
 1. Added URL validation, to help prevent typos when adding VCS providers or setting up SAML authentication. 
 1. Added ability to create state versions for a workspace using the v2 API. See API documentation for details. 
 1. Added current state version as a relationship to workspaces in the API. See API documentation for details. 
@@ -34,7 +33,7 @@ APPLICATION LEVEL FEATURES:
 1. Added enhanced error reporting for Sentinel policy checks. A policy check that encountered multiple evaluation errors will now have all errors displayed in the policy check error output. 
 1. Added the ability to use the types standard library import with Sentinel policy checks. 
 1. Parse summary metadata from `terraform plan` output 
-1. Add support for the new Remote backend 
+1. Add support for the new Remote backend; this requires Terraform 0.11.8. 
 
 APPLICATION LEVEL BUG FIXES:
 
