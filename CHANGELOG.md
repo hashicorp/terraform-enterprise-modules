@@ -33,7 +33,6 @@ APPLICATION LEVEL FEATURES:
 1. Added enhanced error reporting for Sentinel policy checks. A policy check that encountered multiple evaluation errors will now have all errors displayed in the policy check error output. 
 1. Added the ability to use the types standard library import with Sentinel policy checks. 
 1. Parse summary metadata from `terraform plan` output 
-1. Add support for the new Remote backend; this requires Terraform 0.11.8. 
 
 APPLICATION LEVEL BUG FIXES:
 
