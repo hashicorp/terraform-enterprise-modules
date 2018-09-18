@@ -1,5 +1,15 @@
 # Advanced Terraform
 
+-----
+
+## Deprecation warning:
+
+The Terraform Enterprise AMI is no longer actively developed as of 201808-1 and will be fully decommissioned on November 30, 2018. As part of this deprecation, the modules and documentation in this repo are now unmaintained.
+
+Please see our [Migration Guide](https://www.terraform.io/docs/enterprise/private/migrate.html) to migrate to the new Private Terraform Enterprise Installer.
+
+-----
+
 The `aws-standard` terraform module can be as a true terraform module
 to enable some additional features for configure the cluster.
 

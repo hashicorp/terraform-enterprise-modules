@@ -1,5 +1,15 @@
 # Migrating from Terraform Enterprise SaaS
 
+-----
+
+## Deprecation warning:
+
+The Terraform Enterprise AMI is no longer actively developed as of 201808-1 and will be fully decommissioned on November 30, 2018. As part of this deprecation, the modules and documentation in this repo are now unmaintained.
+
+Please see our [Migration Guide](https://www.terraform.io/docs/enterprise/private/migrate.html) to migrate to the new Private Terraform Enterprise Installer.
+
+-----
+
 If you are already a user of the Terraform Enterprise SaaS (hereafter "the SaaS"), you may have Environments that you want to migrate over to your new Private Terraform Enterprise (PTFE) installation.
 
 This document contains instructions on migrating an Environment from the SaaS to PTFE.

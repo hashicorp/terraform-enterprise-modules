@@ -1,5 +1,15 @@
 # Build Pipeline
 
+-----
+
+## Deprecation warning:
+
+The Terraform Enterprise AMI is no longer actively developed as of 201808-1 and will be fully decommissioned on November 30, 2018. As part of this deprecation, the modules and documentation in this repo are now unmaintained.
+
+Please see our [Migration Guide](https://www.terraform.io/docs/enterprise/private/migrate.html) to migrate to the new Private Terraform Enterprise Installer.
+
+-----
+
 The Terraform Enterprise build pipeline consists of a Manager and Worker service for each of Packer and Terraform.
 
 ## `packer-build-manager`
@@ -43,7 +53,7 @@ When failing, builds can fail to execute. Essentially, all Packer related TFE ac
 The `terraform-build-manager` service is responsible for queueing and providing updates for runs (plans, applies) running in Terraform back to Atlas. Atlas then presents this information to the user. `terraform-build-manager` does not execute Terraform.
 
 Upon running a plan or apply in Atlas, `terraform-build-manager` queues and beings monitoring a run's progress, executed by `terraform-build-worker`.
-Additionally, `terraform-build-manager` will upload logs from a build to [`logstream`](archivist.md) for display in the Atlas UI.  
+Additionally, `terraform-build-manager` will upload logs from a build to [`logstream`](archivist.md) for display in the Atlas UI.
 Additionally, run cancelation is handled by `terraform-build-manager`.
 
 ### Impact of Failure

@@ -1,5 +1,15 @@
 # Terraform Enterprise AMI IDs
 
+-----
+
+## Deprecation warning:
+
+The Terraform Enterprise AMI is no longer actively developed as of 201808-1 and will be fully decommissioned on November 30, 2018. As part of this deprecation, the modules and documentation in this repo are now unmaintained.
+
+Please see our [Migration Guide](https://www.terraform.io/docs/enterprise/private/migrate.html) to migrate to the new Private Terraform Enterprise Installer.
+
+-----
+
 Below are the AMI IDs for each Terraform Enterprise release.
 
 Once your AWS Account is granted launch permissions, these AMI IDs should be

@@ -1,5 +1,15 @@
 # Debugging PTFE
 
+-----
+
+## Deprecation warning:
+
+The Terraform Enterprise AMI is no longer actively developed as of 201808-1 and will be fully decommissioned on November 30, 2018. As part of this deprecation, the modules and documentation in this repo are now unmaintained.
+
+Please see our [Migration Guide](https://www.terraform.io/docs/enterprise/private/migrate.html) to migrate to the new Private Terraform Enterprise Installer.
+
+-----
+
 There will be times when PTFE doesn't behave as you'd like. This document is
 designed to provide you, the human trying to run PTFE, with information about
 how to figure out what is going wrong.

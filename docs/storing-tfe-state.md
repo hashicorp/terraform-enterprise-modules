@@ -1,5 +1,15 @@
 # Storing Terraform Enterprise State
 
+-----
+
+## Deprecation warning:
+
+The Terraform Enterprise AMI is no longer actively developed as of 201808-1 and will be fully decommissioned on November 30, 2018. As part of this deprecation, the modules and documentation in this repo are now unmaintained.
+
+Please see our [Migration Guide](https://www.terraform.io/docs/enterprise/private/migrate.html) to migrate to the new Private Terraform Enterprise Installer.
+
+-----
+
 The Terraform Enterprise install process uses Terraform, and therefore must store Terraform State. This presents a bootstrapping problem, because while generally you can use Terraform Enterprise to securely store versioned Terraform State, in this case Terraform Enterprise is not ready yet.
 
 So therefore, you must choose a mechanism for storing the Terraform State produced by the install process.
@@ -40,7 +50,7 @@ terraform {
 EOF
 
 # Initialize Terraform with the Remote Backend
-terraform init 
+terraform init
 ```
 
 Now, if you keep the `backend.tf` file in scope when you run `terraform` operations, all state will be stored in the configured bucket.
