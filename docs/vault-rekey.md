@@ -1,5 +1,15 @@
 # Rekeying Vault
 
+-----
+
+## Deprecation warning:
+
+The Terraform Enterprise AMI is no longer actively developed as of 201808-1 and will be fully decommissioned on November 30, 2018. As part of this deprecation, the modules and documentation in this repo are now unmaintained.
+
+Please see our [Migration Guide](https://www.terraform.io/docs/enterprise/private/migrate.html) to migrate to the new Private Terraform Enterprise Installer.
+
+-----
+
 (Requires a machine image `v201709-1` or later)
 
 The Vault instance used by Terraform Enterprise (TFE) self-manages its unseal key by

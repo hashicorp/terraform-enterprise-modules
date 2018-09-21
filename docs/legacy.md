@@ -1,6 +1,16 @@
 *NOTE:* This document only applies to customers who are running the Legacy TFE
 architecture (mid-late 2016). If you're unsure if that's you, it likely is not.
 
+-----
+
+## Deprecation warning:
+
+The Terraform Enterprise AMI is no longer actively developed as of 201808-1 and will be fully decommissioned on November 30, 2018. As part of this deprecation, the modules and documentation in this repo are now unmaintained.
+
+Please see our [Migration Guide](https://www.terraform.io/docs/enterprise/private/migrate.html) to migrate to the new Private Terraform Enterprise Installer.
+
+-----
+
 ## Migrating from a Legacy Terraform Enterprise (TFE) Installation
 
 The legacy TFE platform (v2) shipped as a complex multi-VM deployment. The

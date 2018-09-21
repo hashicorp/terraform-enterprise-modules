@@ -2,6 +2,16 @@
 
 This document contains information about the Terraform Enterprise AMI.
 
+-----
+
+## Deprecation warning:
+
+The Terraform Enterprise AMI is no longer actively developed as of 201808-1 and will be fully decommissioned on November 30, 2018. As part of this deprecation, the modules and documentation in this repo are now unmaintained.
+
+Please see our [Migration Guide](https://www.terraform.io/docs/enterprise/private/migrate.html) to migrate to the new Private Terraform Enterprise Installer.
+
+-----
+
 ## Operating System
 
 The TFE AMI is based on the latest release of Ubuntu 16.04 with all security
